@@ -26,55 +26,83 @@
             display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        /* --- HEADER Y HỆT --- */
+        /* --- HEADER --- */
         header { background-color: var(--primary-pink); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(255, 156, 189, 0.4); border-bottom: 4px solid #ff7da5; z-index:100; }
         .logo { font-size: 28px; font-weight: 900; color: var(--white); text-shadow: 2px 3px 0px #e07096; text-decoration: none; }
         nav { display: flex; gap: 15px; }
-        nav a { text-decoration: none; color: var(--white); font-weight: 700; font-size: 17px; padding: 10px 20px; border-radius: 30px; transition: 0.3s; }
-        nav a:hover, nav a.active { background-color: var(--white); color: var(--primary-pink); transform: translateY(-3px); }
+        .btn-back { text-decoration: none; background-color: var(--soft-pink); color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-back:hover { background-color: var(--white); color: var(--primary-pink); transform: translateY(-3px); }
 
         main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px 20px; }
 
         .slideshow-header { text-align: center; margin-bottom: 20px; }
         .slideshow-header h1 { color: #ff6b9e; font-size: 32px; font-weight: 900; margin-bottom: 5px; }
-        .btn-back { display: inline-block; text-decoration: none; background-color: var(--soft-pink); color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; margin-bottom: 20px; transition: 0.3s;}
-        .btn-back:hover { background-color: var(--primary-pink); }
 
-        /* --- KHU VỰC TRÌNH CHIẾU --- */
+        /* --- CONTROL PANEL TRÌNH CHIẾU --- */
+        .play-controls {
+            background: rgba(255, 255, 255, 0.9); padding: 20px 30px; border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(255,182,193,0.3); border: 3px dashed var(--soft-pink);
+            margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px); max-width: 900px; width: 100%;
+        }
+
+        .control-group { display: flex; flex-direction: column; gap: 8px; }
+        .control-group label { font-weight: 700; color: #e07096; font-size: 14px; }
+        
+        select, input[type="url"] {
+            padding: 10px 15px; border: 2px solid #ffe0e9; border-radius: 15px; font-family: 'Quicksand', sans-serif;
+            font-weight: 700; color: var(--text-color); outline: none; transition: 0.3s;
+        }
+        select:focus, input:focus { border-color: var(--primary-pink); }
+        
+        .btn-action {
+            padding: 12px 25px; border-radius: 20px; border: none; font-weight: 900; font-size: 15px; cursor: pointer;
+            transition: 0.3s; font-family: 'Quicksand', sans-serif; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        .btn-play { background-color: var(--primary-pink); color: white; }
+        .btn-play:hover { background-color: #ff7da5; transform: translateY(-3px); }
+        .btn-stop { background-color: #ffcccb; color: #d32f2f; display: none; }
+        .btn-stop:hover { background-color: #ff4c4c; color: white; }
+
+        /* --- SLIDER --- */
         .slider-container {
             position: relative; width: 100%; max-width: 900px; height: 60vh; min-height: 400px;
-            background-color: #222; border-radius: 30px; border: 6px solid var(--soft-pink);
+            background-color: #111; border-radius: 30px; border: 6px solid var(--soft-pink);
             box-shadow: 0 15px 30px rgba(255,156,189,0.4); display: flex; justify-content: center; align-items: center; overflow: hidden;
         }
 
-        .slide-item { width: 100%; height: 100%; display: none; justify-content: center; align-items: center; position: relative;}
-        .slide-item.active { display: flex; animation: fade 0.5s ease-in-out; }
-        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+        .slide-item { width: 100%; height: 100%; display: none; justify-content: center; align-items: center; position: absolute; top:0; left:0; }
+        .slide-item.active { display: flex; animation: fade 0.6s ease-in-out; }
+        @keyframes fade { from {opacity: 0.2; transform: scale(0.98);} to {opacity: 1; transform: scale(1);} }
 
-        .slide-item img, .slide-item video {
-            max-width: 100%; max-height: 100%; object-fit: contain;
-        }
+        .slide-item img, .slide-item video { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        /* Caption phủ lên ảnh */
         .slide-caption {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(255, 182, 193, 0.85); color: #444; padding: 15px 30px;
-            border-radius: 20px; font-size: 18px; font-weight: 700; text-align: center;
-            max-width: 80%; backdrop-filter: blur(5px); border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85); color: var(--text-color); padding: 12px 25px;
+            border-radius: 20px; font-size: 16px; font-weight: 800; text-align: center;
+            max-width: 80%; backdrop-filter: blur(8px); border: 2px solid var(--soft-pink); box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
-        /* Nút chuyển trang */
-        .prev, .next {
+        /* Nút chuyển trang (Bấm tay) */
+        .nav-btn {
             cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
-            width: auto; padding: 15px 20px; color: var(--primary-pink); background: rgba(255,255,255,0.8);
-            font-weight: 900; font-size: 24px; border-radius: 50%; transition: 0.3s;
-            user-select: none; border: 3px solid var(--soft-pink);
+            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
+            color: var(--primary-pink); background: rgba(255,255,255,0.8);
+            font-weight: 900; font-size: 20px; border-radius: 50%; transition: 0.3s;
+            user-select: none; border: 3px solid var(--soft-pink); z-index: 10;
         }
         .prev { left: 20px; }
         .next { right: 20px; }
-        .prev:hover, .next:hover { background-color: var(--primary-pink); color: white; }
+        .nav-btn:hover { background-color: var(--primary-pink); color: white; transform: translateY(-50%) scale(1.1); }
 
-        .no-media { color: white; font-size: 20px; font-weight: bold; text-align: center;}
+        .no-media { color: white; font-size: 20px; font-weight: bold; text-align: center; }
+
+        .status-badge {
+            position: absolute; top: 20px; left: 20px; background: var(--primary-pink); color: white;
+            padding: 5px 15px; border-radius: 20px; font-weight: 800; font-size: 14px; z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: none;
+        }
 
         footer { text-align: center; padding: 25px; background-color: var(--primary-pink); color: var(--white); font-weight: 700; border-top: 4px solid #ff7da5; }
     </style>
@@ -84,7 +112,7 @@
     <header>
         <a href="index.html" class="logo">🍀 F7 Team 🍀</a>
         <nav id="navbar">
-            <a href="goc-ky-niem.html" class="btn-back">⬅️ Quay lại</a>
+            <a href="goc-ky-niem.html" class="btn-back">⬅️ Về Góc Kỷ Niệm</a>
         </nav>
     </header>
 
@@ -94,9 +122,41 @@
             <p>Trải nghiệm lại từng khoảnh khắc thanh xuân</p>
         </div>
 
+        <!-- BẢNG ĐIỀU KHIỂN -->
+        <div class="play-controls" id="playControls">
+            <div class="control-group">
+                <label>⏱ Tốc độ (Giây/Ảnh)</label>
+                <select id="intervalSelect">
+                    <option value="3">3 Giây</option>
+                    <option value="5" selected>5 Giây</option>
+                    <option value="10">10 Giây</option>
+                    <option value="15">15 Giây</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>🎵 Nhạc Nền (BGM)</label>
+                <select id="bgmSelect" onchange="toggleCustomUrl()">
+                    <option value="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3">Lofi Chill (Gợi ý)</option>
+                    <option value="https://cdn.pixabay.com/download/audio/2022/11/22/audio_7809968a35.mp3">Acoustic Nhẹ Nhàng</option>
+                    <option value="https://cdn.pixabay.com/download/audio/2021/08/08/audio_dc39bde807.mp3">Upbeat Vui Tươi</option>
+                    <option value="custom">🌐 Dán Link Mp3 Tùy Chọn...</option>
+                </select>
+                <input type="url" id="customBgmUrl" placeholder="Dán link đuôi .mp3 vào đây" style="display:none; margin-top:5px; width:220px; font-size: 13px;">
+            </div>
+            <div class="control-group" style="justify-content: flex-end; padding-bottom: 2px;">
+                <button class="btn-action btn-play" id="btnStartAuto" onclick="startAutoPlay()">▶️ Phát Tự Động</button>
+                <button class="btn-action btn-stop" id="btnStopAuto" onclick="stopAutoPlay()">⏸ Dừng (Bấm Tay)</button>
+            </div>
+        </div>
+
+        <!-- VÙNG TRÌNH CHIẾU -->
         <div class="slider-container" id="sliderContainer">
+            <div class="status-badge" id="statusBadge">Tự động phát 🎬</div>
             <!-- Render từ JS -->
         </div>
+
+        <!-- Audio ẩn để phát nhạc -->
+        <audio id="bgMusic" loop preload="auto"></audio>
     </main>
 
     <footer>
@@ -104,7 +164,6 @@
     </footer>
 
     <script>
-        // Lấy ID album từ URL: ?id=abc123xyz
         const urlParams = new URLSearchParams(window.location.search);
         const currentAlbumId = urlParams.get('id');
 
@@ -113,12 +172,28 @@
         
         let targetAlbum = albums.find(a => a.id === currentAlbumId);
         let slides = mediaItems.filter(m => m.albumId === currentAlbumId);
+        
         let slideIndex = 0;
+        let isAutoPlaying = false;
+        let autoPlayTimer = null;
+        const bgMusic = document.getElementById('bgMusic');
+
+        function toggleCustomUrl() {
+            const select = document.getElementById('bgmSelect');
+            const customInput = document.getElementById('customBgmUrl');
+            if(select.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+            }
+        }
 
         function initSlideshow() {
             if(!targetAlbum) {
                 document.getElementById('albumNameDisplay').innerText = "Album không tồn tại!";
                 document.getElementById('sliderContainer').innerHTML = "<div class='no-media'>Xin lỗi, có vẻ album này đã bị xóa 🥲</div>";
+                document.getElementById('playControls').style.display = 'none';
                 return;
             }
 
@@ -126,21 +201,24 @@
 
             if(slides.length === 0) {
                 document.getElementById('sliderContainer').innerHTML = "<div class='no-media'>Album này chưa có bức ảnh nào cả! 🥲</div>";
+                document.getElementById('playControls').style.display = 'none';
                 return;
             }
 
-            // Tạo các phần tử HTML cho từng slide
             let container = document.getElementById('sliderContainer');
-            let htmlStr = "";
+            // Xóa HTML cũ (giữ lại statusBadge)
+            const badgeHtml = `<div class="status-badge" id="statusBadge">Tự động phát 🎬</div>`;
+            let htmlStr = badgeHtml;
+
             slides.forEach((slide, index) => {
                 let contentTag = slide.type === 'video' 
-                    ? `<video src="${slide.src}" controls></video>` 
-                    : `<img src="${slide.src}">`;
+                    ? `<video src="${slide.src}" class="media-elem" playsinline controls></video>` 
+                    : `<img src="${slide.src}" class="media-elem">`;
                 
                 let captionHtml = slide.caption ? `<div class="slide-caption">${slide.caption}</div>` : "";
 
                 htmlStr += `
-                    <div class="slide-item ${index === 0 ? 'active' : ''}">
+                    <div class="slide-item ${index === 0 ? 'active' : ''}" id="slide-${index}">
                         ${contentTag}
                         ${captionHtml}
                     </div>
@@ -148,34 +226,128 @@
             });
             
             htmlStr += `
-                <a class="prev" onclick="changeSlide(-1)">❮</a>
-                <a class="next" onclick="changeSlide(1)">❯</a>
+                <div class="nav-btn prev" onclick="manualChange(-1)">❮</div>
+                <div class="nav-btn next" onclick="manualChange(1)">❯</div>
             `;
             container.innerHTML = htmlStr;
         }
 
-        window.changeSlide = function(n) {
-            let items = document.querySelectorAll('.slide-item');
-            items[slideIndex].classList.remove('active');
-            
-            // Tạm dừng video nếu có
-            let currentVid = items[slideIndex].querySelector('video');
-            if(currentVid) currentVid.pause();
+        // Đổi slide thủ công bằng nút bấm
+        window.manualChange = function(n) {
+            // Nếu đang auto mà bấm tay, tự động chuyển về chế độ manual
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            }
+            changeSlide(n);
+        }
 
+        // Logic thay đổi Slide (Core)
+        function changeSlide(n) {
+            let items = document.querySelectorAll('.slide-item');
+            
+            // Dọn dẹp slide hiện tại
+            let currentItem = items[slideIndex];
+            currentItem.classList.remove('active');
+            let currentVid = currentItem.querySelector('video');
+            if(currentVid) {
+                currentVid.pause();
+                currentVid.onended = null; // Gỡ sự kiện nếu có
+            }
+
+            // Tính toán index mới
             slideIndex += n;
             if(slideIndex >= slides.length) slideIndex = 0;
             if(slideIndex < 0) slideIndex = slides.length - 1;
 
-            items[slideIndex].classList.add('active');
+            // Hiển thị slide mới
+            let newItem = items[slideIndex];
+            newItem.classList.add('active');
+
+            // Xử lý Logic nếu đang ở chế độ Auto Play
+            if (isAutoPlaying) {
+                applyAutoLogicForCurrentSlide();
+            }
+        }
+
+        // Logic Auto Play từng slide
+        function applyAutoLogicForCurrentSlide() {
+            clearTimeout(autoPlayTimer);
+            let currentItem = document.getElementById(`slide-${slideIndex}`);
+            let isVideo = slides[slideIndex].type === 'video';
+
+            if (isVideo) {
+                // Là Video: Tạm tắt BGM, play video, hết video tự nhảy slide
+                bgMusic.pause();
+                let vid = currentItem.querySelector('video');
+                vid.play().catch(e => console.log("Lỗi play video:", e));
+                vid.onended = () => {
+                    changeSlide(1);
+                };
+            } else {
+                // Là Ảnh: Bật BGM lại (nếu bị tắt), đặt hẹn giờ
+                bgMusic.play().catch(e => console.log("Lỗi play nhạc:", e));
+                let timeMs = parseInt(document.getElementById('intervalSelect').value) * 1000;
+                autoPlayTimer = setTimeout(() => {
+                    changeSlide(1);
+                }, timeMs);
+            }
+        }
+
+        // BẮT ĐẦU AUTO PLAY
+        window.startAutoPlay = function() {
+            if(slides.length === 0) return;
+
+            // Lấy nhạc nền
+            let bgmUrl = document.getElementById('bgmSelect').value;
+            if (bgmUrl === 'custom') {
+                bgmUrl = document.getElementById('customBgmUrl').value.trim();
+                if(!bgmUrl) return alert("Vui lòng dán link mp3 hợp lệ!");
+            }
+
+            bgMusic.src = bgmUrl;
+            
+            isAutoPlaying = true;
+            document.getElementById('btnStartAuto').style.display = 'none';
+            document.getElementById('btnStopAuto').style.display = 'inline-block';
+            document.getElementById('statusBadge').style.display = 'block';
+
+            // Ẩn thanh chọn để cho gọn
+            document.getElementById('intervalSelect').disabled = true;
+            document.getElementById('bgmSelect').disabled = true;
+
+            // Áp dụng logic cho slide đang đứng hiện tại
+            applyAutoLogicForCurrentSlide();
+        }
+
+        // DỪNG AUTO PLAY
+        window.stopAutoPlay = function() {
+            isAutoPlaying = false;
+            clearTimeout(autoPlayTimer);
+            bgMusic.pause();
+            
+            document.getElementById('btnStartAuto').style.display = 'inline-block';
+            document.getElementById('btnStopAuto').style.display = 'none';
+            document.getElementById('statusBadge').style.display = 'none';
+
+            // Mở lại thanh chọn
+            document.getElementById('intervalSelect').disabled = false;
+            document.getElementById('bgmSelect').disabled = false;
+
+            // Dừng video đang phát (nếu có) để nhường quyền cho manual
+            let items = document.querySelectorAll('.slide-item');
+            let currentVid = items[slideIndex].querySelector('video');
+            if(currentVid) {
+                currentVid.onended = null;
+            }
         }
 
         initSlideshow();
 
-        // Thêm tính năng dùng phím mũi tên Trái/Phải để chuyển ảnh
+        // Bấm phím mũi tên Trái/Phải
         document.addEventListener('keydown', function(event) {
             if(slides.length > 0) {
-                if(event.key === 'ArrowLeft') changeSlide(-1);
-                else if(event.key === 'ArrowRight') changeSlide(1);
+                if(event.key === 'ArrowLeft') manualChange(-1);
+                else if(event.key === 'ArrowRight') manualChange(1);
             }
         });
     </script>
