@@ -167,8 +167,9 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Tải lên từ máy (Ảnh / Video)</label>
-                        <input type="file" id="fileInput" accept="image/*,video/*">
+                        <label>Tải lên từ máy (Chọn nhiều Ảnh / Video cùng lúc)</label>
+                        <!-- ĐÃ THÊM THUỘC TÍNH MULTIPLE -->
+                        <input type="file" id="fileInput" accept="image/*,video/*" multiple>
                     </div>
                     <div class="form-group">
                         <label>Hoặc dán Link (URL ảnh/video)</label>
@@ -176,7 +177,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn">🚀 Đăng Lên Góc Kỷ Niệm</button>
+                <button type="submit" class="btn" id="submitBtn">🚀 Đăng Lên Góc Kỷ Niệm</button>
             </form>
         </div>
 
@@ -238,7 +239,6 @@
         let albums = JSON.parse(localStorage.getItem('f7_albums')) || [];
         let mediaItems = JSON.parse(localStorage.getItem('f7_media')) || [];
 
-        // Hỗ trợ đồng bộ dữ liệu cũ (chuẩn hóa dữ liệu sang dạng Object có ID)
         function normalizeData() {
             let changed = false;
             albums = albums.map(a => {
@@ -250,7 +250,6 @@
                 return a;
             });
             mediaItems = mediaItems.map(m => {
-                // Nếu media cũ lưu theo tên album thay vì ID, tiến hành map lại ID
                 if(!m.albumId && m.album) {
                     let match = albums.find(a => a.name === m.album);
                     if(match) m.albumId = match.id;
@@ -322,43 +321,72 @@
             }
         }
 
-        // Chuyển hướng sang trang Trình Chiếu
         function playSlideshow(albumId) {
             window.location.href = `trinh-chieu.html?id=${albumId}`;
         }
 
-        // --- QUẢN LÝ MEDIA ---
-        document.getElementById('mediaForm').addEventListener('submit', function(e) {
+        // --- XỬ LÝ ĐĂNG NHIỀU FILE CÙNG LÚC (MULTI-UPLOAD) ---
+        document.getElementById('mediaForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const albumId = document.getElementById('albumSelect').value;
             if(!albumId) return alert("Vui lòng tạo Album trước khi đăng!");
 
             const fileInput = document.getElementById('fileInput');
             const urlInput = document.getElementById('mediaUrl').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
 
-            if(fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    addMediaItem(albumId, e.target.result, fileInput.files[0].type.startsWith('video') ? 'video' : 'image');
-                }
-                reader.readAsDataURL(fileInput.files[0]);
+            // Xử lý upload danh sách File từ máy
+            if(fileInput.files && fileInput.files.length > 0) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = "⏳ Đang xử lý tải lên...";
+
+                const files = Array.from(fileInput.files);
+                
+                // Đọc toàn bộ danh sách file dưới dạng Promise
+                const readFilesPromises = files.map(file => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const type = file.type.startsWith('video') ? 'video' : 'image';
+                            resolve({
+                                id: 'med_' + Math.random().toString(36).substr(2, 9),
+                                albumId: albumId,
+                                src: e.target.result,
+                                type: type,
+                                caption: ""
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                });
+
+                // Đợi đọc xong tất cả file rồi lưu vào mediaItems
+                const newItems = await Promise.all(readFilesPromises);
+                mediaItems.unshift(...newItems); // Thêm tất cả vào đầu mảng
+
+                saveData();
+                renderGallery();
+                document.getElementById('mediaForm').reset();
+                submitBtn.disabled = false;
+                submitBtn.innerText = "🚀 Đăng Lên Góc Kỷ Niệm";
+
             } else if(urlInput) {
+                // Xử lý link URL
                 let type = (urlInput.match(/\.(mp4|webm|ogg)$/i) || urlInput.includes('video')) ? 'video' : 'image';
-                addMediaItem(albumId, urlInput, type);
+                mediaItems.unshift({
+                    id: 'med_' + Math.random().toString(36).substr(2, 9),
+                    albumId: albumId,
+                    src: urlInput,
+                    type: type,
+                    caption: ""
+                });
+                saveData();
+                renderGallery();
+                document.getElementById('mediaForm').reset();
             } else {
-                alert("Vui lòng tải ảnh/video hoặc dán link hợp lệ!");
+                alert("Vui lòng chọn ít nhất 1 ảnh/video hoặc dán đường dẫn hợp lệ!");
             }
         });
-
-        function addMediaItem(albumId, src, type) {
-            mediaItems.unshift({
-                id: 'med_' + Math.random().toString(36).substr(2, 9),
-                albumId: albumId, src: src, type: type, caption: ""
-            });
-            saveData();
-            renderGallery();
-            document.getElementById('mediaForm').reset();
-        }
 
         window.deleteMedia = function(id) {
             if(confirm("Xóa kỷ niệm này?")) {
