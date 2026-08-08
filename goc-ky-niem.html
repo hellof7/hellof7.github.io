@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Góc Kỷ Niệm - F7 Team</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff0f5;
+            color: #5a4b4b;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            background-color: #ffb6c1;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: #ffb6c1;
+                width: 200px;
+                border-radius: 0 0 0 15px;
+                box-shadow: -2px 4px 6px rgba(0,0,0,0.1);
+                padding: 10px 0;
+            }
+            nav.show { display: flex; }
+            nav a { margin: 5px 15px; text-align: right; }
+        }
+
+        main { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        /* --- CONTROL PANEL (THÊM ALBUM / TẢI MEDIA) --- */
+        .panel {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border: 2px dashed #ffb6c1;
+        }
+        .panel h3 { margin-top: 0; color: #ff69b4; }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group { flex: 1; min-width: 220px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
+        input, select, textarea {
+            width: 100%; padding: 10px; border: 1px solid #fecfef; border-radius: 10px; font-family: 'Quicksand', sans-serif;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #ff69b4; }
+
+        .btn {
+            background-color: #ff69b4; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif;
+        }
+        .btn:hover { background-color: #ff1493; }
+        .btn-secondary { background-color: #b19cd9; }
+        .btn-secondary:hover { background-color: #9370db; }
+        .btn-danger { background-color: #ffcccb; color: red; }
+        .btn-danger:hover { background-color: red; color: white; }
+
+        /* --- KHU VỰC HIỂN THỊ ALBUM ---. */
+        .album-section { margin-bottom: 40px; }
+        .album-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ffb6c1;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .album-title { font-size: 24px; color: #ff69b4; margin: 0; }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .media-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #fff0f5;
+            transition: transform 0.2s;
+        }
+        .media-card:hover { transform: translateY(-5px); }
+
+        .media-container {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .media-container img, .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-body { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .media-caption { font-size: 14px; color: #5a4b4b; margin-bottom: 10px; white-space: pre-wrap; word-break: break-word; }
+        
+        .media-actions { display: flex; gap: 5px; justify-content: flex-end; align-items: center; margin-top: auto; }
+        .media-actions button {
+            padding: 5px 10px; border-radius: 8px; border: none; font-size: 12px; font-weight: bold; cursor: pointer; font-family: 'Quicksand', sans-serif;
+        }
+
+        footer { text-align: center; padding: 20px; background-color: #ffb6c1; color: white; font-weight: 600; margin-top: 40px; }
+
+        /* Modal viết/sửa caption */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-content {
+            background: #fff; padding: 25px; border-radius: 20px; width: 90%; max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 { margin-top: 0; color: #ff69b4; }
+        .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">🍀 F7 Team 🍀</a>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <nav id="nav-menu">
+            <a href="index.html">Trang Chủ</a>
+            <a href="goc-ky-niem.html" class="active">Góc Kỷ Niệm</a>
+            <a href="su-kien-hang-nam.html">Sự Kiện Hằng Năm</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- KHU VỰC THÊM ALBUM VÀ TẢI LÊN KỶ NIỆM -->
+        <div class="panel">
+            <h3>📸 Thêm Kỷ Niệm / Ảnh / Video Mới</h3>
+            <form id="mediaForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Chọn Album (Phân loại) *</label>
+                        <select id="albumSelect" required>
+                            <!-- Render bằng JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tạo Album mới (Nếu chưa có trong danh sách)</label>
+                        <div style="display: flex; gap: 5px;">
+                            <input type="text" id="newAlbumName" placeholder="VD: Năm 2025, Kỷ yếu...">
+                            <button type="button" class="btn btn-secondary" onclick="addNewAlbum()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tải lên từ máy (Ảnh hoặc Video)</label>
+                        <input type="file" id="fileInput" accept="image/*,video/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Hoặc dán Link (Google Drive / Ảnh trực tuyến)</label>
+                        <input type="url" id="mediaUrl" placeholder="https://...">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">🚀 Đăng Kỷ Niệm</button>
+            </form>
+        </div>
+
+        <!-- KHU VỰC HIỂN THỊ CÁC ALBUM VÀ MEDIA -->
+        <div id="albumsContainer">
+            <!-- Render từ JS -->
+        </div>
+    </main>
+
+    <!-- MODAL VIẾT/SỬA CAPTION -->
+    <div class="modal" id="captionModal">
+        <div class="modal-content">
+            <h3>✍️ Viết / Sửa Caption</h3>
+            <input type="hidden" id="modalMediaId">
+            <textarea id="modalCaptionText" rows="5" placeholder="Nhập cảm xúc, câu chuyện không giới hạn độ dài..."></textarea>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeCaptionModal()">Hủy</button>
+                <button class="btn" onclick="saveCaption()">Lưu Caption</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with ❤️ by F7 | Đồng hành từ 2025</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("nav-menu").classList.toggle("show");
+        }
+
+        // Khởi tạo dữ liệu mẫu nếu chưa có
+        let albums = JSON.parse(localStorage.getItem('f7_albums')) || ["Năm 2025 (Kỳ II Lớp 10)", "Năm 2026 (Gắn kết & Lầy lội)"];
+        let mediaItems = JSON.parse(localStorage.getItem('f7_media')) || [];
+
+        // Lưu trữ
+        function saveData() {
+            localStorage.setItem('f7_albums', JSON.stringify(albums));
+            localStorage.setItem('f7_media', JSON.stringify(mediaItems));
+        }
+
+        // Cập nhật danh sách chọn album
+        function renderAlbumsDropdown() {
+            const select = document.getElementById('albumSelect');
+            select.innerHTML = '';
+            albums.forEach(alb => {
+                select.innerHTML += `<option value="${alb}">${alb}</option>`;
+            });
+        }
+
+        // Thêm album mới
+        function addNewAlbum() {
+            const input = document.getElementById('newAlbumName');
+            const name = input.value.trim();
+            if(name && !albums.includes(name)) {
+                albums.push(name);
+                saveData();
+                renderAlbumsDropdown();
+                renderGallery();
+                input.value = '';
+            } else {
+                alert("Tên album trống hoặc đã tồn tại!");
+            }
+        }
+
+        // Xóa Album (và các hình ảnh bên trong hoặc chuyển hướng)
+        function deleteAlbum(albumName) {
+            if(confirm(`Bạn có chắc muốn xóa album "${albumName}" và toàn bộ ảnh/video trong đó không?`)) {
+                albums = albums.filter(a => a !== albumName);
+                mediaItems = mediaItems.filter(m => m.album !== albumName);
+                saveData();
+                renderAlbumsDropdown();
+                renderGallery();
+            }
+        }
+
+        // Xử lý upload file hoặc URL
+        document.getElementById('mediaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const album = document.getElementById('albumSelect').value;
+            const fileInput = document.getElementById('fileInput');
+            const urlInput = document.getElementById('mediaUrl').value.trim();
+
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addMediaItem(album, e.target.result, fileInput.files[0].type.startsWith('video') ? 'video' : 'image');
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else if(urlInput) {
+                // Xử lý link Google Drive cơ bản (nếu là link chia sẻ dạng view/open, cố gắng hiển thị dạng trực tiếp nếu có thể, hoặc dùng iframe/ảnh trực tuyến)
+                let finalUrl = urlInput;
+                if(urlInput.includes("drive.google.com")) {
+                    // Chuyển đổi link view sang link direct nếu muốn hiển thị ảnh từ Drive
+                    let match = urlInput.match(/\/d\/(.*?)\/view/);
+                    if(match && match[1]) {
+                        finalUrl = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                    }
+                }
+                // Mặc định cho là ảnh, hoặc kiểm tra đuôi video
+                let type = (urlInput.includes('.mp4') || urlInput.includes('video')) ? 'video' : 'image';
+                addMediaItem(album, finalUrl, type);
+            } else {
+                alert("Vui lòng tải lên một tệp hoặc dán một đường dẫn hợp lệ!");
+            }
+        });
+
+        function addMediaItem(album, src, type) {
+            const newItem = {
+                id: '_' + Math.random().toString(36).substr(2, 9),
+                album: album,
+                src: src,
+                type: type, // 'image' hoặc 'video'
+                caption: ""
+            };
+            mediaItems.push(newItem);
+            saveData();
+            renderGallery();
+            document.getElementById('mediaForm').reset();
+        }
+
+        // Xóa một media item
+        window.deleteMedia = function(id) {
+            if(confirm("Bạn có chắc muốn xóa kỷ niệm này không?")) {
+                mediaItems = mediaItems.filter(m => m.id !== id);
+                saveData();
+                renderGallery();
+            }
+        }
+
+        // Mở modal viết/sửa caption
+        window.openCaptionModal = function(id) {
+            const item = mediaItems.find(m => m.id === id);
+            document.getElementById('modalMediaId').value = id;
+            document.getElementById('modalCaptionText').value = item.caption || "";
+            document.getElementById('captionModal').style.display = 'flex';
+        }
+
+        function closeCaptionModal() {
+            document.getElementById('captionModal').style.display = 'none';
+        }
+
+        function saveCaption() {
+            const id = document.getElementById('modalMediaId').value;
+            const text = document.getElementById('modalCaptionText').value;
+            const item = mediaItems.find(m => m.id === id);
+            if(item) {
+                item.caption = text;
+                saveData();
+                renderGallery();
+            }
+            closeCaptionModal();
+        }
+
+        // Render toàn bộ Gallery chia theo Album
+        function renderGallery() {
+            const container = document.getElementById('albumsContainer');
+            container.innerHTML = '';
+
+            if(albums.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:#777;">Chưa có album nào. Hãy tạo album mới ở trên nhé!</p>`;
+                return;
+            }
+
+            albums.forEach(alb => {
+                let itemsInAlbum = mediaItems.filter(m => m.album === alb);
+                
+                let mediaHtml = '';
+                if(itemsInAlbum.length === 0) {
+                    mediaHtml = `<p style="color: #999; font-style: italic; grid-column: 1/-1; text-align: center;">Album này chưa có ảnh hoặc video nào.</p>`;
+                } else {
+                    itemsInAlbum.forEach(item => {
+                        let contentTag = item.type === 'video' 
+                            ? `<video src="${item.src}" controls></video>` 
+                            : `<img src="${item.src}" alt="Kỷ niệm">`;
+
+                        mediaHtml += `
+                            <div class="media-card">
+                                <div class="media-container">
+                                    ${contentTag}
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-caption">${item.caption ? item.caption : '<span style="color:#ccc; font-style:italic;">Chưa có caption...</span>'}</div>
+                                    <div class="media-actions">
+                                        <button class="btn" style="background-color:#ffb6c1;" onclick="openCaptionModal('${item.id}')">✍️ ${item.caption ? 'Sửa Caption' : 'Viết Caption'}</button>
+                                        <button class="btn-danger" onclick="deleteMedia('${item.id}')">❌ Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                container.innerHTML += `
+                    <div class="album-section">
+                        <div class="album-header">
+                            <h2 class="album-title">📂 ${alb}</h2>
+                            <button class="btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="deleteAlbum('${alb}')">Xóa Album</button>
+                        </div>
+                        <div class="media-grid">
+                            ${mediaHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Khởi chạy khi load trang
+        renderAlbumsDropdown();
+        renderGallery();
+    </script>
+</body>
+</html>
