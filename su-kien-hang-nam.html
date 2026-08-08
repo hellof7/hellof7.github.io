@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự Kiện Hằng Năm - F7 Team</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff0f5;
+            color: #5a4b4b;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- NAVBAR RESPONSIVE --- */
+        header {
+            background-color: #ffb6c1;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        /* Nút Hamburger cho điện thoại */
+        .menu-toggle {
+            display: none;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav {
+                display: none; /* Ẩn mặc định trên mobile */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: #ffb6c1;
+                width: 200px;
+                border-radius: 0 0 0 15px;
+                box-shadow: -2px 4px 6px rgba(0,0,0,0.1);
+                padding: 10px 0;
+            }
+            nav.show {
+                display: flex; /* Hiện khi bấm nút */
+            }
+            nav a {
+                margin: 5px 15px;
+                text-align: right;
+            }
+        }
+
+        /* --- SỰ KIỆN GẦN NHẤT (BIG COUNTDOWN) --- */
+        .closest-event-container {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .closest-event-container h2 { margin-top: 0; color: #fff; font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        .closest-title { font-size: 36px; font-weight: 700; color: #fff; margin: 10px 0; }
+        .big-countdown { font-size: 48px; font-weight: 700; color: #ff1493; background: #fff; display: inline-block; padding: 10px 30px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-top: 10px;}
+
+        main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* --- FORM THÊM/SỬA SỰ KIỆN --- */
+        .form-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border: 2px dashed #ffb6c1;
+        }
+
+        .form-container h3 { margin-top: 0; color: #ff69b4; }
+        
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group > div { flex: 1; min-width: 200px; }
+        
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px;}
+        input, select {
+            width: 100%; padding: 10px; border: 1px solid #fecfef; border-radius: 10px; font-family: 'Quicksand', sans-serif;
+        }
+        input:focus, select:focus { outline: none; border-color: #ff69b4; }
+        
+        .btn {
+            background-color: #ff69b4; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif;
+        }
+        .btn:hover { background-color: #ff1493; }
+        .btn-cancel { background-color: #ccc; margin-left: 10px; display: none;}
+        .btn-cancel:hover { background-color: #999; }
+
+        /* --- DANH SÁCH SỰ KIỆN --- */
+        .event-list { display: flex; flex-direction: column; gap: 15px; }
+        
+        .event-card {
+            background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-left: 6px solid #ffb6c1; transition: transform 0.2s;
+        }
+        .event-card:hover { transform: translateX(5px); }
+        
+        .event-info { flex: 1; min-width: 250px; }
+        .event-title { font-size: 20px; font-weight: 700; color: #ff69b4; margin: 0 0 5px 0; }
+        .event-details { font-size: 14px; color: #777; margin: 5px 0; }
+        
+        /* Badges */
+        .badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: white; display: inline-block; margin-right: 5px;}
+        .cat-badge { background-color: #a0d8ef; color: #333; } /* Xanh biển nhẹ */
+        
+        /* Status Colors */
+        .st-se-dien-ra { background-color: #b19cd9; } /* Tím */
+        .st-sap-dien-ra { background-color: #ffb347; } /* Cam */
+        .st-dang-dien-ra { background-color: #77dd77; animation: pulse 1.5s infinite; } /* Xanh lá */
+        .st-da-ket-thuc { background-color: #d3d3d3; color: #555; } /* Xám */
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .event-timer { font-size: 18px; font-weight: bold; color: #ff69b4; margin: 10px 0; min-width: 200px; text-align: right;}
+        
+        .event-actions button {
+            border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-weight: bold; margin-left: 5px; font-family: 'Quicksand', sans-serif; transition: 0.2s;
+        }
+        .btn-edit { background-color: #ffe4e1; color: #ff69b4; }
+        .btn-edit:hover { background-color: #ffb6c1; color: white;}
+        .btn-delete { background-color: #ffcccb; color: red; }
+        .btn-delete:hover { background-color: red; color: white;}
+
+        footer { text-align: center; padding: 20px; background-color: #ffb6c1; color: white; font-weight: 600; margin-top: 40px; }
+
+        @media (max-width: 600px) {
+            .big-countdown { font-size: 32px; }
+            .event-timer { text-align: left; }
+            .event-actions { margin-top: 10px; width: 100%; display: flex; }
+            .event-actions button { flex: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">🍀 F7 Team 🍀</a>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <nav id="nav-menu">
+            <a href="index.html">Trang Chủ</a>
+            <a href="goc-ky-niem.html">Góc Kỷ Niệm</a>
+            <a href="su-kien-hang-nam.html" class="active">Sự Kiện Hằng Năm</a>
+        </nav>
+    </header>
+
+    <!-- KHU VỰC SỰ KIỆN GẦN NHẤT ĐẾM NGƯỢC -->
+    <div class="closest-event-container" id="closestEventContainer">
+        <h2>⏳ Đang đếm ngược tới...</h2>
+        <div class="closest-title" id="closestTitle">Chưa có sự kiện nào sắp tới</div>
+        <div class="big-countdown" id="closestCountdown">--:--:--:--</div>
+    </div>
+
+    <main>
+        <!-- FORM QUẢN LÝ -->
+        <div class="form-container">
+            <h3 id="formTitle">✨ Thêm Sự Kiện Mới</h3>
+            <form id="eventForm">
+                <input type="hidden" id="eventId">
+                <div class="form-group">
+                    <div>
+                        <label>Tên sự kiện *</label>
+                        <input type="text" id="eventName" required placeholder="VD: Sinh nhật bé Chiikawa, Đi Đà Lạt...">
+                    </div>
+                    <div>
+                        <label>Phân loại *</label>
+                        <select id="eventCategory">
+                            <option value="Sinh nhật 🎂">Sinh nhật 🎂</option>
+                            <option value="Đi chơi 🚗">Đi chơi 🚗</option>
+                            <option value="Học tập 📚">Học tập 📚</option>
+                            <option value="Khác ✨">Khác ✨</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Ngày (DD/MM/YYYY) *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div>
+                        <label>Giờ bắt đầu (Bỏ trống = Cả ngày)</label>
+                        <input type="time" id="eventStart">
+                    </div>
+                    <div>
+                        <label>Giờ kết thúc</label>
+                        <input type="time" id="eventEnd">
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn" id="btnSubmit">Lưu Sự Kiện</button>
+                    <button type="button" class="btn btn-cancel" id="btnCancel" onclick="resetForm()">Hủy sửa</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- DANH SÁCH SỰ KIỆN -->
+        <h3 style="color: #ff69b4;">📅 Danh sách sự kiện của nhóm</h3>
+        <div class="event-list" id="eventList">
+            <!-- Render từ JS -->
+        </div>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ by F7 | Đồng hành từ 2025</p>
+    </footer>
+
+    <script>
+        // --- 1. XỬ LÝ NAVBAR MENU ---
+        function toggleMenu() {
+            document.getElementById("nav-menu").classList.toggle("show");
+        }
+
+        // --- 2. QUẢN LÝ SỰ KIỆN ---
+        let events = JSON.parse(localStorage.getItem('f7_events')) || [];
+
+        const eventForm = document.getElementById('eventForm');
+        
+        // Sinh ID ngẫu nhiên
+        function generateId() {
+            return '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Lấy thông tin ngày giờ thành đối tượng Date (chuẩn hóa giờ)
+        function getEventDates(event) {
+            let start = new Date(event.date + "T" + (event.startTime || "00:00") + ":00");
+            let end = new Date(event.date + "T" + (event.endTime || "23:59") + ":00");
+            return { start, end };
+        }
+
+        // Đánh giá trạng thái
+        function getEventStatus(event, now) {
+            let { start, end } = getEventDates(event);
+            if (now > end) return { text: "Đã kết thúc", class: "st-da-ket-thuc" };
+            if (now >= start && now <= end) return { text: "Đang diễn ra", class: "st-dang-dien-ra" };
+            
+            // Nếu chưa diễn ra, kiểm tra xem có "Sắp diễn ra" (trong vòng 24h tới) không
+            let diffHours = (start - now) / (1000 * 60 * 60);
+            if (diffHours <= 24) return { text: "Sắp diễn ra", class: "st-sap-dien-ra" };
+            return { text: "Sẽ diễn ra", class: "st-se-dien-ra" };
+        }
+
+        // Render giao diện
+        function renderEvents() {
+            const list = document.getElementById('eventList');
+            list.innerHTML = '';
+            let now = new Date();
+            let upcomingEvents = [];
+
+            // Sắp xếp sự kiện: Chưa/Đang diễn ra lên đầu, theo thời gian gần nhất
+            events.sort((a, b) => getEventDates(a).start - getEventDates(b).start);
+
+            events.forEach(ev => {
+                let status = getEventStatus(ev, now);
+                let { start, end } = getEventDates(ev);
+                
+                // Thu thập cho màn hình to (bỏ qua cái đã kết thúc)
+                if (status.text !== "Đã kết thúc") upcomingEvents.push({ ...ev, start });
+
+                // Chuỗi hiển thị giờ
+                let timeStr = ev.startTime ? `${ev.startTime} - ${ev.endTime || 'Hết ngày'}` : 'Cả ngày';
+                
+                // Format lại ngày theo dạng DD/MM/YYYY
+                let dateSplit = ev.date.split('-'); // input date trả về YYYY-MM-DD
+                let dateFormatted = `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`;
+
+                list.innerHTML += `
+                    <div class="event-card">
+                        <div class="event-info">
+                            <h4 class="event-title">${ev.name}</h4>
+                            <span class="badge cat-badge">${ev.category}</span>
+                            <span class="badge ${status.class}">${status.text}</span>
+                            <p class="event-details">📅 ${dateFormatted} | ⏰ ${timeStr}</p>
+                        </div>
+                        <div class="event-timer" id="timer-${ev.id}">
+                            <!-- Update bởi setInterval -->
+                        </div>
+                        <div class="event-actions">
+                            <button class="btn-edit" onclick="editEvent('${ev.id}')">✏️ Sửa</button>
+                            <button class="btn-delete" onclick="deleteEvent('${ev.id}')">❌ Xóa</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Cập nhật sự kiện gần nhất lên đầu
+            if (upcomingEvents.length > 0) {
+                document.getElementById('closestTitle').innerText = upcomingEvents[0].name;
+                document.getElementById('closestTitle').dataset.targetId = upcomingEvents[0].id;
+            } else {
+                document.getElementById('closestTitle').innerText = "Chưa có sự kiện nào sắp tới 🛌";
+                document.getElementById('closestCountdown').innerText = "00 ngày 00:00:00";
+                document.getElementById('closestTitle').dataset.targetId = "";
+            }
+        }
+
+        // Logic thêm/sửa sự kiện
+        eventForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('eventId').value;
+            
+            const newEvent = {
+                id: id ? id : generateId(),
+                name: document.getElementById('eventName').value,
+                category: document.getElementById('eventCategory').value,
+                date: document.getElementById('eventDate').value,
+                startTime: document.getElementById('eventStart').value,
+                endTime: document.getElementById('eventEnd').value
+            };
+
+            if (id) {
+                let index = events.findIndex(ev => ev.id === id);
+                events[index] = newEvent;
+            } else {
+                events.push(newEvent);
+            }
+
+            localStorage.setItem('f7_events', JSON.stringify(events));
+            resetForm();
+            renderEvents();
+        });
+
+        // Xóa sự kiện
+        window.deleteEvent = function(id) {
+            if(confirm("Bạn có chắc chắn muốn xóa sự kiện này không?")) {
+                events = events.filter(ev => ev.id !== id);
+                localStorage.setItem('f7_events', JSON.stringify(events));
+                renderEvents();
+            }
+        }
+
+        // Sửa sự kiện
+        window.editEvent = function(id) {
+            let ev = events.find(e => e.id === id);
+            document.getElementById('eventId').value = ev.id;
+            document.getElementById('eventName').value = ev.name;
+            document.getElementById('eventCategory').value = ev.category;
+            document.getElementById('eventDate').value = ev.date;
+            document.getElementById('eventStart').value = ev.startTime;
+            document.getElementById('eventEnd').value = ev.endTime;
+            
+            document.getElementById('formTitle').innerText = "✏️ Sửa Sự Kiện";
+            document.getElementById('btnSubmit').innerText = "Cập Nhật";
+            document.getElementById('btnCancel').style.display = "inline-block";
+            window.scrollTo({ top: document.querySelector('.form-container').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        // Đặt lại form
+        window.resetForm = function() {
+            eventForm.reset();
+            document.getElementById('eventId').value = "";
+            document.getElementById('formTitle').innerText = "✨ Thêm Sự Kiện Mới";
+            document.getElementById('btnSubmit').innerText = "Lưu Sự Kiện";
+            document.getElementById('btnCancel').style.display = "none";
+        }
+
+        // --- 3. ĐẾM NGƯỢC THỜI GIAN THEO GIÂY ---
+        function updateTimers() {
+            let now = new Date();
+            let closestId = document.getElementById('closestTitle').dataset.targetId;
+
+            events.forEach(ev => {
+                let { start, end } = getEventDates(ev);
+                let timerEl = document.getElementById('timer-' + ev.id);
+                let text = "";
+
+                if (now > end) {
+                    text = "Đã xong ✔️";
+                } else if (now >= start && now <= end) {
+                    text = "Đang quẩy 🎉";
+                } else {
+                    let diff = start - now;
+                    let d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    let h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    let m = Math.floor((diff / 1000 / 60) % 60);
+                    let s = Math.floor((diff / 1000) % 60);
+                    
+                    // Format có số 0 ở đầu
+                    h = h < 10 ? "0" + h : h;
+                    m = m < 10 ? "0" + m : m;
+                    s = s < 10 ? "0" + s : s;
+                    
+                    text = `${d} ngày ${h}:${m}:${s}`;
+                    
+                    // Cập nhật Big Countdown nếu là sự kiện gần nhất
+                    if (ev.id === closestId) {
+                        document.getElementById('closestCountdown').innerText = text;
+                    }
+                }
+                if(timerEl) timerEl.innerText = text;
+            });
+        }
+
+        // Khởi tạo
+        renderEvents();
+        setInterval(() => {
+            updateTimers();
+            // Cứ mỗi phút kiểm tra lại trạng thái để đổi màu nhãn (badge)
+            if (new Date().getSeconds() === 0) renderEvents(); 
+        }, 1000);
+        updateTimers(); // Chạy ngay lần đầu tiên
+
+    </script>
+</body>
+</html>
