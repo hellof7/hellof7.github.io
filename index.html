@@ -5,119 +5,237 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vũ Trụ Chiikawa của F7</title>
     <style>
-        /* Cài đặt font chữ dễ thương và màu nền pastel */
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        /* Cài đặt font chữ dễ thương */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap');
         
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #fff0f5; /* Màu hồng pastel nhạt */
-            color: #5a4b4b;
+        :root {
+            --primary-pink: #ff9cbd;
+            --soft-pink: #ffb6c1;
+            --bg-color: #fff5f8;
+            --text-color: #6b5252;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Thanh điều hướng (Header) */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            /* Tạo background chấm bi siêu cute */
+            background-image: radial-gradient(#ffe0e9 3px, transparent 3px);
+            background-size: 30px 30px;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* ----- HEADER & NAVBAR ----- */
         header {
-            background-color: #ffb6c1; /* Hồng phấn */
+            background-color: var(--primary-pink);
             padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(255, 156, 189, 0.4);
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 4px solid #ff7da5;
         }
 
-        /* Logo đơn giản nhưng dễ thương */
         .logo {
             font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: 900;
+            color: var(--white);
+            text-shadow: 2px 3px 0px #e07096;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        /* Menu điều hướng */
+        /* Menu máy tính */
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
         nav a {
             text-decoration: none;
-            color: #fff;
-            font-weight: 600;
-            font-size: 18px;
-            margin-left: 20px;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 17px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 2px solid transparent;
         }
 
         nav a:hover {
-            background-color: #ff69b4; /* Hồng đậm hơn khi di chuột vào */
-            color: white;
+            background-color: var(--white);
+            color: var(--primary-pink);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
 
-        /* Khu vực Banner chúc mừng sinh nhật */
+        /* Nút Hamburger cho Mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 4px;
+            background-color: var(--white);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        /* ----- HERO SECTION ----- */
         .hero {
             text-align: center;
             padding: 60px 20px;
-            background: linear-gradient(to bottom, #fff0f5, #e0ffff); /* Gradient hồng sang xanh biển pastel */
+            margin: 30px auto;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 40px;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.2);
+            border: 3px dashed var(--soft-pink);
+            backdrop-filter: blur(5px);
         }
 
         .hero h1 {
             font-size: 42px;
-            color: #ff69b4;
-            margin-bottom: 15px;
+            color: #ff6b9e;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #ffe0e9;
+            /* Hiệu ứng nhún nhảy */
+            animation: bounce 2s infinite;
         }
 
         .hero p {
-            font-size: 20px;
+            font-size: 18px;
+            font-weight: 500;
             max-width: 700px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        /* Khu vực hiển thị 7 Chiikawa */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ----- CHIIKAWA GANG (CARDS) ----- */
         .chiikawa-gang {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 25px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto 50px auto;
         }
 
-        /* Thẻ cho từng nhân vật */
         .card {
-            background: #fff;
-            border-radius: 20px;
+            background: var(--white);
+            border-radius: 30px; /* Bo tròn mập mạp */
             padding: 15px;
-            width: 150px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            width: 160px;
+            box-shadow: 0 8px 15px rgba(255, 156, 189, 0.2);
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 3px solid #ffebcd;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Hiệu ứng nảy */
+            border: 4px solid #fff0f5;
+            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-color: #ffb6c1;
+            transform: translateY(-15px) scale(1.05) rotate(3deg);
+            border-color: var(--primary-pink);
+            box-shadow: 0 15px 25px rgba(255, 156, 189, 0.4);
+            z-index: 10;
         }
 
         .card img {
             width: 100%;
-            height: auto;
-            border-radius: 10px;
+            height: 130px;
+            object-fit: contain;
+            border-radius: 20px;
+            margin-bottom: 10px;
         }
 
-        /* Chân trang */
+        .card p {
+            font-weight: 900;
+            font-size: 18px;
+            color: #e07096;
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ----- FOOTER ----- */
         footer {
             text-align: center;
-            padding: 20px;
-            background-color: #ffb6c1;
-            color: white;
-            font-weight: 600;
-            margin-top: 40px;
+            padding: 25px;
+            background-color: var(--primary-pink);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+            border-top: 4px solid #ff7da5;
+        }
+
+        /* ----- RESPONSIVE (MOBILE) ----- */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-pink);
+                flex-direction: column;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-in-out;
+                border-bottom: 0px solid #ff7da5;
+            }
+
+            nav.active {
+                max-height: 300px; /* Mở rộng menu */
+                border-bottom: 4px solid #ff7da5;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+            }
+
+            nav a {
+                border-radius: 0;
+                padding: 15px 20px;
+                text-align: center;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            nav a:hover {
+                transform: translateY(0);
+                background-color: #ff7da5;
+                color: var(--white);
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
@@ -126,7 +244,15 @@
     <!-- PHẦN HEADER: LOGO VÀ THANH MENU -->
     <header>
         <a href="index.html" class="logo">🍀 F7 Team 🍀</a>
-        <nav>
+        
+        <!-- Nút Hamburger cho Mobile -->
+        <div class="hamburger" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="navbar">
             <a href="index.html">Trang Chủ</a>
             <a href="goc-ky-niem.html">Góc Kỷ Niệm</a>
             <a href="su-kien-hang-nam.html">Sự Kiện Hằng Năm</a>
@@ -142,7 +268,6 @@
 
         <!-- PHẦN HIỂN THỊ 7 BÉ CHIIKAWA CỦA NHÓM -->
         <section class="chiikawa-gang">
-            <!-- Bạn có thể sửa tên/chú thích dưới mỗi ảnh ở thẻ <p> -->
             <div class="card">
                 <img src="1000011985.png" alt="Momonga">
                 <p>Momonga</p>
@@ -178,6 +303,16 @@
     <footer>
         <p>Made with ❤️ by F7 | Đồng hành từ 2025</p>
     </footer>
+
+    <!-- SCRIPT XỬ LÝ MENU MOBILE -->
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbar = document.getElementById('navbar');
+
+        mobileMenu.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+        });
+    </script>
 
 </body>
 </html>
