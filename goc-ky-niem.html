@@ -31,108 +31,84 @@
         }
 
         /* --- HEADER & NAVBAR --- */
-        header {
-            background-color: var(--primary-pink);
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(255, 156, 189, 0.4);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 4px solid #ff7da5;
-        }
-
-        .logo {
-            font-size: 28px; font-weight: 900; color: var(--white);
-            text-shadow: 2px 3px 0px #e07096; text-decoration: none;
-        }
-
+        header { background-color: var(--primary-pink); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(255, 156, 189, 0.4); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid #ff7da5; }
+        .logo { font-size: 28px; font-weight: 900; color: var(--white); text-shadow: 2px 3px 0px #e07096; text-decoration: none; }
         nav { display: flex; gap: 15px; }
-        nav a {
-            text-decoration: none; color: var(--white); font-weight: 700; font-size: 17px;
-            padding: 10px 20px; border-radius: 30px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        nav a:hover, nav a.active {
-            background-color: var(--white); color: var(--primary-pink); transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-
+        nav a { text-decoration: none; color: var(--white); font-weight: 700; font-size: 17px; padding: 10px 20px; border-radius: 30px; transition: 0.3s; }
+        nav a:hover, nav a.active { background-color: var(--white); color: var(--primary-pink); transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+        
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
         .hamburger span { width: 30px; height: 4px; background-color: var(--white); border-radius: 10px; transition: 0.3s; }
 
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             .hamburger { display: flex; }
-            nav {
-                position: absolute; top: 100%; left: 0; width: 100%;
-                background-color: var(--primary-pink); flex-direction: column; gap: 0; max-height: 0;
-                overflow: hidden; transition: max-height 0.4s ease-in-out; border-bottom: 0px solid #ff7da5;
-            }
+            nav { position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--primary-pink); flex-direction: column; gap: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; border-bottom: 0px solid #ff7da5; }
             nav.active { max-height: 300px; border-bottom: 4px solid #ff7da5; box-shadow: 0 10px 10px rgba(0,0,0,0.1); }
             nav a { border-radius: 0; padding: 15px 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.2); }
         }
 
-        main { max-width: 1100px; margin: 30px auto; padding: 20px; }
+        main { max-width: 1200px; margin: 30px auto; padding: 20px; }
 
-        /* --- CONTROL PANEL TẢI MEDIA VÀ TẠO ALBUM --- */
-        .panel {
-            background: rgba(255,255,255,0.9); padding: 30px; border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(255,182,193,0.2); margin-bottom: 40px;
-            border: 4px dashed var(--soft-pink); backdrop-filter: blur(5px);
-        }
-        .panel h3 { margin-top: 0; color: #ff6b9e; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
-        .form-row { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 15px; }
-        .form-group { flex: 1; min-width: 220px; }
-        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 15px; color: #e07096; }
+        /* --- THANH CÔNG CỤ (FILTER & TẠO ALBUM) --- */
+        .toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; background: rgba(255,255,255,0.9); padding: 20px; border-radius: 25px; box-shadow: 0 8px 20px rgba(255,182,193,0.2); border: 3px dashed var(--soft-pink); backdrop-filter: blur(5px); }
+        .year-filter { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 900; color: #ff6b9e; }
+        .year-filter select { padding: 8px 15px; border-radius: 15px; border: 2px solid var(--primary-pink); font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--text-color); font-size: 16px; outline: none; }
         
-        input, select, textarea {
-            width: 100%; padding: 12px 15px; border: 2px solid #ffe0e9; border-radius: 15px;
-            font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 15px;
-            color: var(--text-color); transition: 0.3s;
-        }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(255,156,189,0.3); }
-
-        .btn {
-            background-color: var(--primary-pink); color: white; border: none; padding: 12px 25px;
-            border-radius: 25px; font-weight: 900; font-size: 15px; cursor: pointer; transition: 0.3s;
-            font-family: 'Quicksand', sans-serif; box-shadow: 0 5px 10px rgba(255,156,189,0.4); display: inline-flex; align-items: center; gap: 5px;
-        }
+        .btn { background-color: var(--primary-pink); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-weight: 900; font-size: 15px; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif; box-shadow: 0 5px 10px rgba(255,156,189,0.4); display: inline-flex; align-items: center; gap: 5px; }
         .btn:hover { background-color: #ff7da5; transform: translateY(-3px); }
         .btn-secondary { background-color: var(--blue-pastel); color: #444; box-shadow: 0 5px 10px rgba(160,216,239,0.4); }
         .btn-secondary:hover { background-color: #79c9ef; }
         .btn-danger { background-color: #ffcccb; color: #d32f2f; box-shadow: none; }
         .btn-danger:hover { background-color: #ff4c4c; color: white; }
-        .btn-action { padding: 8px 15px; border-radius: 15px; font-size: 13px; margin-left: 5px;}
 
-        /* --- GALLERY TỪNG ALBUM --- */
-        .album-section { margin-bottom: 50px; background: #fff; padding: 25px; border-radius: 30px; box-shadow: 0 10px 20px rgba(255,182,193,0.15); border: 3px solid #fff0f5; }
-        .album-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 3px dashed #ffb6c1; padding-bottom: 15px; margin-bottom: 20px; gap: 10px;}
-        .album-title-group { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
-        .album-title { font-size: 26px; font-weight: 900; color: #ff6b9e; margin: 0; }
-        .album-badge { background-color: var(--purple-pastel); color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: 800; box-shadow: 0 3px 5px rgba(0,0,0,0.1); }
+        /* --- THUMBNAIL ALBUM GRID --- */
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .album-thumb { background: #fff; border-radius: 25px; padding: 15px; cursor: pointer; border: 3px solid #fff0f5; box-shadow: 0 8px 15px rgba(255,182,193,0.2); transition: 0.3s; text-align: center; display: flex; flex-direction: column; }
+        .album-thumb:hover { transform: translateY(-10px); border-color: var(--primary-pink); box-shadow: 0 12px 25px rgba(255,156,189,0.4); }
         
-        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .media-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 15px rgba(255,182,193,0.2); display: flex; flex-direction: column; border: 2px solid #fff0f5; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .media-card:hover { transform: translateY(-10px) scale(1.02); border-color: var(--soft-pink); z-index: 10; }
-        
-        .media-container { width: 100%; height: 200px; background: #fdf0f5; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;}
-        .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        
-        .media-body { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .media-caption { font-size: 15px; font-weight: 600; color: var(--text-color); margin-bottom: 10px; white-space: pre-wrap; word-break: break-word; }
-        
-        .media-actions { display: flex; gap: 5px; justify-content: flex-end; align-items: center; margin-top: auto; }
-        .media-actions button { padding: 8px 12px; border-radius: 12px; border: none; font-size: 12px; font-weight: 800; cursor: pointer; font-family: 'Quicksand', sans-serif; transition: 0.2s;}
+        .album-cover { width: 100%; height: 160px; border-radius: 15px; margin-bottom: 15px; background: #fdf0f5; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+        .album-cover img, .album-cover video { width: 100%; height: 100%; object-fit: cover; }
+        .album-cover .no-cover { font-size: 40px; opacity: 0.5; }
+        .album-count { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; }
+
+        .album-info h3 { color: #ff6b9e; font-size: 18px; font-weight: 900; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .album-badge { background-color: var(--purple-pastel); color: #fff; padding: 3px 10px; border-radius: 15px; font-size: 12px; font-weight: 800; display: inline-block; }
 
         /* --- MODAL CHUNG --- */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 182, 193, 0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #fff; padding: 30px; border-radius: 30px; width: 90%; max-width: 500px; box-shadow: 0 15px 30px rgba(255,156,189,0.3); border: 4px solid #fff0f5; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 182, 193, 0.6); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: #fff; padding: 30px; border-radius: 30px; width: 90%; max-width: 500px; box-shadow: 0 15px 30px rgba(255,156,189,0.4); border: 4px solid #fff0f5; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .modal-content h3 { color: #ff6b9e; font-size: 24px; margin-bottom: 15px; font-weight: 900; }
-        .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        
+        input[type="text"], input[type="number"], input[type="url"], select, textarea { width: 100%; padding: 12px 15px; border: 2px solid #ffe0e9; border-radius: 15px; font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 15px; color: var(--text-color); transition: 0.3s; margin-top: 5px; box-sizing: border-box; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-pink); }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { font-weight: 700; color: #e07096; }
 
-        footer { text-align: center; padding: 25px; background-color: var(--primary-pink); color: var(--white); font-weight: 700; border-top: 4px solid #ff7da5; margin-top: 50px; }
+        /* --- MODAL CHI TIẾT ALBUM (POPUP LỚN ALL-IN-ONE) --- */
+        .modal-content.large { width: 95%; max-width: 1100px; height: 90vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; background: var(--bg-color); }
+        .detail-header { background: #fff; padding: 20px 30px; border-bottom: 3px dashed var(--soft-pink); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .detail-title-group h2 { color: #ff6b9e; font-size: 26px; font-weight: 900; margin-bottom: 5px; }
+        .detail-meta { font-size: 14px; font-weight: bold; color: #888; }
+        .detail-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        
+        .detail-body { flex: 1; overflow-y: auto; padding: 20px 30px; }
+        
+        /* Form upload trong Modal lớn */
+        .upload-panel { background: #fff; padding: 20px; border-radius: 20px; border: 2px dashed var(--primary-pink); margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
+        .upload-panel .form-group { margin-bottom: 0; flex: 1; min-width: 200px; }
+        
+        /* Grid Media trong Modal Lớn */
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .media-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(255,182,193,0.3); display: flex; flex-direction: column; border: 2px solid #fff0f5; }
+        .media-container { width: 100%; height: 160px; background: #fdf0f5; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; }
+        .media-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
+        .media-caption { font-size: 13px; font-weight: 600; margin-bottom: 10px; word-break: break-word; }
+        .media-actions { display: flex; gap: 5px; justify-content: flex-end; margin-top: auto; }
+        .btn-small { padding: 5px 10px; font-size: 12px; border-radius: 10px; }
+
+        footer { text-align: center; padding: 25px; background-color: var(--primary-pink); color: var(--white); font-weight: 700; border-top: 4px solid #ff7da5; margin-top: auto; }
     </style>
 </head>
 <body>
@@ -148,78 +124,103 @@
     </header>
 
     <main>
-        <!-- KHU VỰC THÊM ALBUM VÀ TẢI LÊN KỶ NIỆM -->
-        <div class="panel">
-            <h3>📸 Đăng Kỷ Niệm Mới</h3>
-            <form id="mediaForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Chọn Album lưu trữ *</label>
-                        <select id="albumSelect" required>
-                            <!-- Render bằng JS -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Hoặc Tạo Album mới</label>
-                        <button type="button" class="btn btn-secondary" style="width:100%; justify-content:center;" onclick="openAlbumModal()">✨ Tạo Album Mới</button>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Tải lên từ máy (Chọn nhiều Ảnh / Video cùng lúc)</label>
-                        <!-- ĐÃ THÊM THUỘC TÍNH MULTIPLE -->
-                        <input type="file" id="fileInput" accept="image/*,video/*" multiple>
-                    </div>
-                    <div class="form-group">
-                        <label>Hoặc dán Link (URL ảnh/video)</label>
-                        <input type="url" id="mediaUrl" placeholder="https://...">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn" id="submitBtn">🚀 Đăng Lên Góc Kỷ Niệm</button>
-            </form>
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+            <div class="year-filter">
+                <label>📅 Lọc theo năm:</label>
+                <select id="yearSelect" onchange="renderThumbnails()">
+                    <!-- Render từ JS -->
+                </select>
+            </div>
+            <button class="btn btn-secondary" onclick="openAlbumModal()">✨ Tạo Album Mới</button>
         </div>
 
-        <!-- KHU VỰC HIỂN THỊ CÁC ALBUM VÀ MEDIA -->
-        <div id="albumsContainer">
+        <!-- THUMBNAIL GRID -->
+        <div id="albumGrid" class="album-grid">
             <!-- Render từ JS -->
         </div>
     </main>
 
-    <!-- MODAL TẠO / SỬA ALBUM -->
-    <div class="modal-overlay" id="albumModal">
+    <!-- 1. MODAL TẠO / SỬA ALBUM (NHỎ) -->
+    <div class="modal-overlay" id="albumModal" style="z-index: 3000;">
         <div class="modal-content">
             <h3 id="albumModalTitle">✨ Tạo Album Mới</h3>
             <input type="hidden" id="modalAlbumId">
-            <div style="margin-bottom: 15px;">
+            <div class="form-group">
                 <label>Tên Album</label>
                 <input type="text" id="modalAlbumName" placeholder="VD: Sinh Nhật Chị Đại...">
             </div>
-            <div style="margin-bottom: 15px;">
+            <div class="form-group">
+                <label>Năm kỷ niệm</label>
+                <input type="number" id="modalAlbumYear" min="2000" max="2100">
+            </div>
+            <div class="form-group">
                 <label>Phân loại (Classify)</label>
                 <select id="modalAlbumCat">
                     <option value="Sự Kiện 🎉">Sự Kiện 🎉</option>
                     <option value="Du Lịch 🚗">Du Lịch 🚗</option>
                     <option value="Thanh Xuân 🌸">Thanh Xuân 🌸</option>
                     <option value="Lầy Lội 🤪">Lầy Lội 🤪</option>
+                    <!-- THÊM PHÂN LOẠI KHÁC -->
+                    <option value="Khác ✨">Khác ✨</option>
                 </select>
             </div>
-            <div class="modal-buttons">
-                <button class="btn btn-danger btn-action" onclick="closeAlbumModal()">Hủy</button>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-danger" onclick="closeAlbumModal()">Hủy</button>
                 <button class="btn" onclick="saveAlbum()">Lưu Album</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL VIẾT/SỬA CAPTION -->
-    <div class="modal-overlay" id="captionModal">
+    <!-- 2. MODAL CHI TIẾT ALBUM (ALL-IN-ONE LỚN) -->
+    <div class="modal-overlay" id="albumDetailModal">
+        <div class="modal-content large">
+            <div class="detail-header">
+                <div class="detail-title-group">
+                    <h2 id="detailTitle">Tên Album</h2>
+                    <div class="detail-meta">
+                        <span id="detailBadge" class="album-badge">Category</span>
+                        <span id="detailYear" style="margin-left: 10px;">📅 2025</span>
+                    </div>
+                </div>
+                <div class="detail-actions">
+                    <button class="btn" id="btnPlaySlideshow">🎬 Trình Chiếu</button>
+                    <button class="btn btn-secondary" onclick="editCurrentAlbum()">✏️ Sửa Album</button>
+                    <button class="btn btn-danger" onclick="deleteCurrentAlbum()">❌ Xóa Album</button>
+                    <button class="btn" style="background:#ccc; color:#333; box-shadow:none;" onclick="closeDetailModal()">✖ Đóng</button>
+                </div>
+            </div>
+            
+            <div class="detail-body">
+                <!-- Vùng Tải lên siêu tốc cho Album này -->
+                <form class="upload-panel" id="detailUploadForm">
+                    <div class="form-group">
+                        <label>Tải lên Ảnh/Video (Chọn nhiều)</label>
+                        <input type="file" id="detailFileInput" accept="image/*,video/*" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label>Hoặc dán Link URL</label>
+                        <input type="url" id="detailMediaUrl" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn" id="btnUploadMedia">🚀 Đăng Lên</button>
+                </form>
+
+                <!-- Lưới hiển thị Media -->
+                <div class="media-grid" id="detailMediaGrid">
+                    <!-- Render từ JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MODAL VIẾT/SỬA CAPTION -->
+    <div class="modal-overlay" id="captionModal" style="z-index: 3000;">
         <div class="modal-content">
             <h3>✍️ Viết Caption</h3>
             <input type="hidden" id="modalMediaId">
             <textarea id="modalCaptionText" rows="4" placeholder="Nhập cảm xúc của bạn..."></textarea>
-            <div class="modal-buttons">
-                <button class="btn btn-danger btn-action" onclick="closeCaptionModal()">Hủy</button>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-danger" onclick="closeCaptionModal()">Hủy</button>
                 <button class="btn" onclick="saveCaption()">Lưu</button>
             </div>
         </div>
@@ -238,19 +239,21 @@
         // --- DỮ LIỆU ---
         let albums = JSON.parse(localStorage.getItem('f7_albums')) || [];
         let mediaItems = JSON.parse(localStorage.getItem('f7_media')) || [];
+        
+        let currentViewAlbumId = null; // Lưu ID của album đang mở trong Popup Lớn
 
+        // Chuẩn hóa dữ liệu cũ (Thêm trường Year nếu thiếu)
         function normalizeData() {
             let changed = false;
+            let currentYear = new Date().getFullYear();
             albums = albums.map(a => {
-                if (typeof a === 'string') {
-                    changed = true;
-                    return { id: 'alb_' + Math.random().toString(36).substr(2, 9), name: a, category: 'Thanh Xuân 🌸' };
-                }
-                if(!a.category) { a.category = 'Thanh Xuân 🌸'; changed = true;}
+                if (typeof a === 'string') { changed = true; return { id: 'alb_' + Math.random().toString(36).substr(2, 9), name: a, category: 'Thanh Xuân 🌸', year: currentYear }; }
+                if (!a.category) { a.category = 'Thanh Xuân 🌸'; changed = true; }
+                if (!a.year) { a.year = currentYear; changed = true; }
                 return a;
             });
             mediaItems = mediaItems.map(m => {
-                if(!m.albumId && m.album) {
+                if (!m.albumId && m.album) {
                     let match = albums.find(a => a.name === m.album);
                     if(match) m.albumId = match.id;
                     changed = true;
@@ -265,15 +268,74 @@
             localStorage.setItem('f7_media', JSON.stringify(mediaItems));
         }
 
-        // --- QUẢN LÝ ALBUM ---
-        function renderAlbumsDropdown() {
-            const select = document.getElementById('albumSelect');
-            select.innerHTML = albums.length ? '' : '<option value="">-- Chưa có Album nào --</option>';
-            albums.forEach(alb => {
-                select.innerHTML += `<option value="${alb.id}">${alb.name} (${alb.category})</option>`;
+        // --- RENDER BỘ LỌC NĂM ---
+        function renderYearsDropdown() {
+            const select = document.getElementById('yearSelect');
+            let years = [...new Set(albums.map(a => a.year))];
+            let currentYear = new Date().getFullYear();
+            if(!years.includes(currentYear)) years.push(currentYear);
+            years.sort((a, b) => b - a); // Năm mới nhất lên đầu
+
+            let currentVal = select.value || currentYear.toString();
+            select.innerHTML = '<option value="all">Tất cả các năm 🌟</option>';
+            years.forEach(y => {
+                select.innerHTML += `<option value="${y}">${y}</option>`;
+            });
+            
+            // Set lại giá trị (nếu có)
+            if (years.includes(parseInt(currentVal)) || currentVal === 'all') {
+                select.value = currentVal;
+            } else {
+                select.value = years[0];
+            }
+        }
+
+        // --- RENDER DANH SÁCH ALBUM (THUMBNAIL) ---
+        function renderThumbnails() {
+            const container = document.getElementById('albumGrid');
+            const selectedYear = document.getElementById('yearSelect').value;
+            
+            let filteredAlbums = albums;
+            if (selectedYear !== 'all') {
+                filteredAlbums = albums.filter(a => a.year == selectedYear);
+            }
+
+            container.innerHTML = '';
+            
+            if(filteredAlbums.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; font-weight:bold; color:#ff6b9e;">Năm này chưa có album nào cả. Bấm "Tạo Album Mới" ngay thôi! 🍀</p>`;
+                return;
+            }
+
+            filteredAlbums.forEach(alb => {
+                let itemsInAlbum = mediaItems.filter(m => m.albumId === alb.id);
+                let coverHtml = `<div class="no-cover">📁</div>`;
+                
+                if (itemsInAlbum.length > 0) {
+                    let firstItem = itemsInAlbum[0];
+                    if (firstItem.type === 'video') {
+                        coverHtml = `<video src="${firstItem.src}" muted preload="metadata"></video>`;
+                    } else {
+                        coverHtml = `<img src="${firstItem.src}" alt="cover">`;
+                    }
+                }
+
+                container.innerHTML += `
+                    <div class="album-thumb" onclick="openDetailModal('${alb.id}')">
+                        <div class="album-cover">
+                            ${coverHtml}
+                            <div class="album-count">${itemsInAlbum.length} mục</div>
+                        </div>
+                        <div class="album-info">
+                            <h3>${alb.name}</h3>
+                            <span class="album-badge">${alb.category}</span>
+                        </div>
+                    </div>
+                `;
             });
         }
 
+        // --- QUẢN LÝ ALBUM (TẠO / SỬA) ---
         function openAlbumModal(id = null) {
             document.getElementById('albumModal').style.display = 'flex';
             if(id) {
@@ -281,12 +343,14 @@
                 document.getElementById('albumModalTitle').innerText = '✏️ Sửa Album';
                 document.getElementById('modalAlbumId').value = alb.id;
                 document.getElementById('modalAlbumName').value = alb.name;
+                document.getElementById('modalAlbumYear').value = alb.year;
                 document.getElementById('modalAlbumCat').value = alb.category;
             } else {
                 document.getElementById('albumModalTitle').innerText = '✨ Tạo Album Mới';
                 document.getElementById('modalAlbumId').value = '';
                 document.getElementById('modalAlbumName').value = '';
-                document.getElementById('modalAlbumCat').value = 'Thanh Xuân 🌸';
+                document.getElementById('modalAlbumYear').value = new Date().getFullYear();
+                document.getElementById('modalAlbumCat').value = 'Sự Kiện 🎉';
             }
         }
 
@@ -295,64 +359,119 @@
         function saveAlbum() {
             const id = document.getElementById('modalAlbumId').value;
             const name = document.getElementById('modalAlbumName').value.trim();
+            const year = parseInt(document.getElementById('modalAlbumYear').value);
             const cat = document.getElementById('modalAlbumCat').value;
 
-            if(!name) return alert("Vui lòng nhập tên Album!");
+            if(!name || !year) return alert("Vui lòng nhập tên và năm Album!");
 
             if(id) {
                 let alb = albums.find(a => a.id === id);
-                alb.name = name; alb.category = cat;
+                alb.name = name; alb.year = year; alb.category = cat;
+                // Nếu đang mở Modal lớn, cập nhật luôn text trên đó
+                if(currentViewAlbumId === id) {
+                    document.getElementById('detailTitle').innerText = alb.name;
+                    document.getElementById('detailBadge').innerText = alb.category;
+                    document.getElementById('detailYear').innerText = `📅 ${alb.year}`;
+                }
             } else {
-                albums.unshift({ id: 'alb_' + Math.random().toString(36).substr(2, 9), name, category: cat });
+                albums.unshift({ id: 'alb_' + Math.random().toString(36).substr(2, 9), name, year, category: cat });
             }
+            
             saveData();
             closeAlbumModal();
-            renderAlbumsDropdown();
-            renderGallery();
+            renderYearsDropdown();
+            renderThumbnails();
         }
 
-        function deleteAlbum(id, name) {
-            if(confirm(`Bạn có chắc muốn xóa album "${name}" và toàn bộ kỷ niệm bên trong không?`)) {
-                albums = albums.filter(a => a.id !== id);
-                mediaItems = mediaItems.filter(m => m.albumId !== id);
+        // --- XỬ LÝ POPUP LỚN (ALL-IN-ONE) ---
+        function openDetailModal(albumId) {
+            currentViewAlbumId = albumId;
+            let alb = albums.find(a => a.id === albumId);
+            
+            // Cập nhật Header
+            document.getElementById('detailTitle').innerText = alb.name;
+            document.getElementById('detailBadge').innerText = alb.category;
+            document.getElementById('detailYear').innerText = `📅 ${alb.year}`;
+            document.getElementById('btnPlaySlideshow').onclick = () => window.location.href = `trinh-chieu.html?id=${albumId}`;
+            
+            renderDetailMediaGrid();
+            document.getElementById('albumDetailModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Khóa cuộn trang nền
+        }
+
+        function closeDetailModal() {
+            document.getElementById('albumDetailModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Mở khóa cuộn
+            currentViewAlbumId = null;
+            renderThumbnails(); // Render lại thumbnail nhỡ ảnh bìa thay đổi
+        }
+
+        function editCurrentAlbum() { openAlbumModal(currentViewAlbumId); }
+
+        function deleteCurrentAlbum() {
+            let alb = albums.find(a => a.id === currentViewAlbumId);
+            if(confirm(`Bạn có chắc muốn xóa vĩnh viễn album "${alb.name}" và toàn bộ kỷ niệm bên trong?`)) {
+                albums = albums.filter(a => a.id !== currentViewAlbumId);
+                mediaItems = mediaItems.filter(m => m.albumId !== currentViewAlbumId);
                 saveData();
-                renderAlbumsDropdown();
-                renderGallery();
+                closeDetailModal();
+                renderYearsDropdown();
+                renderThumbnails();
             }
         }
 
-        function playSlideshow(albumId) {
-            window.location.href = `trinh-chieu.html?id=${albumId}`;
+        // Render Lưới ảnh trong Modal Lớn
+        function renderDetailMediaGrid() {
+            const grid = document.getElementById('detailMediaGrid');
+            let items = mediaItems.filter(m => m.albumId === currentViewAlbumId);
+            
+            if(items.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #999; font-weight:bold;">Chưa có kỷ niệm nào. Hãy tải lên ngay phía trên nhé!</p>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => {
+                let contentTag = item.type === 'video' 
+                    ? `<video src="${item.src}" controls></video>` 
+                    : `<img src="${item.src}" alt="Kỷ niệm">`;
+                
+                return `
+                    <div class="media-card">
+                        <div class="media-container">${contentTag}</div>
+                        <div class="media-body">
+                            <div class="media-caption">${item.caption ? item.caption : '<span style="color:#ccc; font-style:italic;">Chưa có caption...</span>'}</div>
+                            <div class="media-actions">
+                                <button class="btn btn-secondary btn-small" onclick="openCaptionModal('${item.id}')">✍️</button>
+                                <button class="btn-danger btn-small" style="border:none; cursor:pointer;" onclick="deleteMedia('${item.id}')">❌</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // --- XỬ LÝ ĐĂNG NHIỀU FILE CÙNG LÚC (MULTI-UPLOAD) ---
-        document.getElementById('mediaForm').addEventListener('submit', async function(e) {
+        // Xử lý Form Upload trong Modal Lớn
+        document.getElementById('detailUploadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const albumId = document.getElementById('albumSelect').value;
-            if(!albumId) return alert("Vui lòng tạo Album trước khi đăng!");
+            if(!currentViewAlbumId) return;
 
-            const fileInput = document.getElementById('fileInput');
-            const urlInput = document.getElementById('mediaUrl').value.trim();
-            const submitBtn = document.getElementById('submitBtn');
+            const fileInput = document.getElementById('detailFileInput');
+            const urlInput = document.getElementById('detailMediaUrl').value.trim();
+            const submitBtn = document.getElementById('btnUploadMedia');
 
-            // Xử lý upload danh sách File từ máy
             if(fileInput.files && fileInput.files.length > 0) {
-                submitBtn.disabled = true;
-                submitBtn.innerText = "⏳ Đang xử lý tải lên...";
+                submitBtn.disabled = true; submitBtn.innerText = "⏳ Đang tải...";
 
                 const files = Array.from(fileInput.files);
-                
-                // Đọc toàn bộ danh sách file dưới dạng Promise
                 const readFilesPromises = files.map(file => {
                     return new Promise((resolve) => {
                         const reader = new FileReader();
                         reader.onload = function(e) {
-                            const type = file.type.startsWith('video') ? 'video' : 'image';
                             resolve({
                                 id: 'med_' + Math.random().toString(36).substr(2, 9),
-                                albumId: albumId,
+                                albumId: currentViewAlbumId,
                                 src: e.target.result,
-                                type: type,
+                                type: file.type.startsWith('video') ? 'video' : 'image',
                                 caption: ""
                             });
                         };
@@ -360,38 +479,36 @@
                     });
                 });
 
-                // Đợi đọc xong tất cả file rồi lưu vào mediaItems
                 const newItems = await Promise.all(readFilesPromises);
-                mediaItems.unshift(...newItems); // Thêm tất cả vào đầu mảng
-
+                mediaItems.push(...newItems); // Thêm vào cuối để giữ thứ tự upload
+                
                 saveData();
-                renderGallery();
-                document.getElementById('mediaForm').reset();
-                submitBtn.disabled = false;
-                submitBtn.innerText = "🚀 Đăng Lên Góc Kỷ Niệm";
+                renderDetailMediaGrid();
+                this.reset();
+                submitBtn.disabled = false; submitBtn.innerText = "🚀 Đăng Lên";
 
             } else if(urlInput) {
-                // Xử lý link URL
                 let type = (urlInput.match(/\.(mp4|webm|ogg)$/i) || urlInput.includes('video')) ? 'video' : 'image';
-                mediaItems.unshift({
+                mediaItems.push({
                     id: 'med_' + Math.random().toString(36).substr(2, 9),
-                    albumId: albumId,
+                    albumId: currentViewAlbumId,
                     src: urlInput,
                     type: type,
                     caption: ""
                 });
                 saveData();
-                renderGallery();
-                document.getElementById('mediaForm').reset();
+                renderDetailMediaGrid();
+                this.reset();
             } else {
-                alert("Vui lòng chọn ít nhất 1 ảnh/video hoặc dán đường dẫn hợp lệ!");
+                alert("Chọn file hoặc dán link trước nhé!");
             }
         });
 
         window.deleteMedia = function(id) {
             if(confirm("Xóa kỷ niệm này?")) {
                 mediaItems = mediaItems.filter(m => m.id !== id);
-                saveData(); renderGallery();
+                saveData(); 
+                renderDetailMediaGrid(); // Update ngay lưới ảnh trong Modal
             }
         }
 
@@ -408,73 +525,16 @@
             const item = mediaItems.find(m => m.id === id);
             if(item) {
                 item.caption = document.getElementById('modalCaptionText').value;
-                saveData(); renderGallery();
+                saveData(); 
+                renderDetailMediaGrid();
             }
             closeCaptionModal();
         }
 
-        // --- RENDER GIAO DIỆN CHÍNH ---
-        function renderGallery() {
-            const container = document.getElementById('albumsContainer');
-            container.innerHTML = '';
-
-            if(albums.length === 0) {
-                container.innerHTML = `<p style="text-align:center; font-weight:700; color:#ff6b9e;">Chưa có album nào cả. Cùng tạo album đầu tiên nhé! 🍀</p>`;
-                return;
-            }
-
-            albums.forEach(alb => {
-                let itemsInAlbum = mediaItems.filter(m => m.albumId === alb.id);
-                let mediaHtml = '';
-                
-                if(itemsInAlbum.length === 0) {
-                    mediaHtml = `<p style="color: #999; grid-column: 1/-1; text-align: center; font-weight:bold;">Trống trơn... Hãy thêm ảnh vào album này nhé!</p>`;
-                } else {
-                    itemsInAlbum.forEach(item => {
-                        let contentTag = item.type === 'video' 
-                            ? `<video src="${item.src}" controls></video>` 
-                            : `<img src="${item.src}" alt="Kỷ niệm">`;
-
-                        mediaHtml += `
-                            <div class="media-card">
-                                <div class="media-container">${contentTag}</div>
-                                <div class="media-body">
-                                    <div class="media-caption">${item.caption ? item.caption : '<span style="color:#ccc; font-style:italic;">Chưa có caption...</span>'}</div>
-                                    <div class="media-actions">
-                                        <button class="btn btn-action" style="background-color:#ffe4e1; color:#ff6b9e;" onclick="openCaptionModal('${item.id}')">✍️ Sửa</button>
-                                        <button class="btn-danger btn-action" onclick="deleteMedia('${item.id}')">❌ Xóa</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-
-                container.innerHTML += `
-                    <div class="album-section">
-                        <div class="album-header">
-                            <div class="album-title-group">
-                                <h2 class="album-title">📂 ${alb.name}</h2>
-                                <span class="album-badge">${alb.category || 'Khác ✨'}</span>
-                            </div>
-                            <div class="album-actions" style="display:flex; gap:10px;">
-                                <button class="btn" onclick="playSlideshow('${alb.id}')">🎬 Xem Trình Chiếu</button>
-                                <button class="btn btn-secondary btn-action" onclick="openAlbumModal('${alb.id}')">✏️ Sửa</button>
-                                <button class="btn-danger btn-action" onclick="deleteAlbum('${alb.id}', '${alb.name}')">❌ Xóa</button>
-                            </div>
-                        </div>
-                        <div class="media-grid">
-                            ${mediaHtml}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
         // Khởi chạy
         normalizeData();
-        renderAlbumsDropdown();
-        renderGallery();
+        renderYearsDropdown();
+        renderThumbnails();
     </script>
 </body>
 </html>
