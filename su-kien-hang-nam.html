@@ -5,197 +5,257 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sự Kiện Hằng Năm - F7 Team</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        /* Cài đặt font chữ dễ thương */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap');
         
-        * { box-sizing: border-box; }
-        
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #fff0f5;
-            color: #5a4b4b;
+        :root {
+            --primary-pink: #ff9cbd;
+            --soft-pink: #ffb6c1;
+            --bg-color: #fff5f8;
+            --text-color: #6b5252;
+            --white: #ffffff;
+            --blue-pastel: #a0d8ef;
+            --purple-pastel: #b19cd9;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* --- NAVBAR RESPONSIVE --- */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#ffe0e9 3px, transparent 3px);
+            background-size: 30px 30px;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* ----- HEADER & NAVBAR (ĐỒNG BỘ TỪ INDEX) ----- */
         header {
-            background-color: #ffb6c1;
+            background-color: var(--primary-pink);
             padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(255, 156, 189, 0.4);
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 4px solid #ff7da5;
         }
 
         .logo {
             font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: 900;
+            color: var(--white);
+            text-shadow: 2px 3px 0px #e07096;
             text-decoration: none;
-        }
-
-        /* Nút Hamburger cho điện thoại */
-        .menu-toggle {
-            display: none;
-            font-size: 30px;
-            color: white;
-            cursor: pointer;
-        }
-
-        nav {
             display: flex;
-            gap: 15px;
+            align-items: center;
+            gap: 5px;
         }
+
+        nav { display: flex; gap: 15px; }
 
         nav a {
             text-decoration: none;
-            color: #fff;
-            font-weight: 600;
-            font-size: 18px;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 17px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 2px solid transparent;
         }
 
         nav a:hover, nav a.active {
-            background-color: #ff69b4;
-            color: white;
+            background-color: var(--white);
+            color: var(--primary-pink);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
 
-        /* Responsive Navbar */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 4px;
+            background-color: var(--white);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
+            header { padding: 15px 20px; }
+            .hamburger { display: flex; }
             nav {
-                display: none; /* Ẩn mặc định trên mobile */
-                flex-direction: column;
                 position: absolute;
                 top: 100%;
-                right: 0;
-                background-color: #ffb6c1;
-                width: 200px;
-                border-radius: 0 0 0 15px;
-                box-shadow: -2px 4px 6px rgba(0,0,0,0.1);
-                padding: 10px 0;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-pink);
+                flex-direction: column;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-in-out;
+                border-bottom: 0px solid #ff7da5;
             }
-            nav.show {
-                display: flex; /* Hiện khi bấm nút */
+            nav.active {
+                max-height: 300px;
+                border-bottom: 4px solid #ff7da5;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
             }
             nav a {
-                margin: 5px 15px;
-                text-align: right;
+                border-radius: 0;
+                padding: 15px 20px;
+                text-align: center;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            nav a:hover, nav a.active {
+                transform: translateY(0);
+                background-color: #ff7da5;
+                color: var(--white);
             }
         }
 
         /* --- SỰ KIỆN GẦN NHẤT (BIG COUNTDOWN) --- */
         .closest-event-container {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #ff9cbd 0%, #ffb6c1 100%);
+            padding: 50px 20px;
             text-align: center;
-            border-radius: 0 0 30px 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3);
+            margin-bottom: 40px;
+            border-bottom: 5px dashed #fff;
         }
         
-        .closest-event-container h2 { margin-top: 0; color: #fff; font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
-        .closest-title { font-size: 36px; font-weight: 700; color: #fff; margin: 10px 0; }
-        .big-countdown { font-size: 48px; font-weight: 700; color: #ff1493; background: #fff; display: inline-block; padding: 10px 30px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-top: 10px;}
+        .closest-event-container h2 { margin-top: 0; color: #fff; font-size: 26px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); font-weight: 900;}
+        .closest-title { font-size: 40px; font-weight: 900; color: #fff; margin: 15px 0; text-shadow: 2px 3px 0px #e07096; animation: bounce 2s infinite;}
+        .big-countdown { font-size: 48px; font-weight: 900; color: var(--primary-pink); background: #fff; display: inline-block; padding: 15px 40px; border-radius: 40px; box-shadow: 0 8px 15px rgba(0,0,0,0.1); margin-top: 10px; border: 4px solid #fff0f5;}
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
 
         main { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
         /* --- FORM THÊM/SỬA SỰ KIỆN --- */
         .form-container {
-            background: #fff;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            border: 2px dashed #ffb6c1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+            margin-bottom: 40px;
+            border: 4px dashed var(--soft-pink);
+            backdrop-filter: blur(5px);
         }
 
-        .form-container h3 { margin-top: 0; color: #ff69b4; }
+        .form-container h3 { margin-top: 0; color: #ff6b9e; font-size: 24px; font-weight: 900; }
         
-        .form-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .form-group > div { flex: 1; min-width: 200px; }
+        .form-group { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
+        .form-group > div { flex: 1; min-width: 220px; }
         
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px;}
+        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 15px; color: #e07096;}
         input, select {
-            width: 100%; padding: 10px; border: 1px solid #fecfef; border-radius: 10px; font-family: 'Quicksand', sans-serif;
+            width: 100%; padding: 12px 15px; border: 2px solid #ffe0e9; border-radius: 15px; font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 15px; color: var(--text-color); transition: 0.3s;
         }
-        input:focus, select:focus { outline: none; border-color: #ff69b4; }
+        input:focus, select:focus { outline: none; border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(255, 156, 189, 0.3); }
         
         .btn {
-            background-color: #ff69b4; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif;
+            background-color: var(--primary-pink); color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: 900; font-size: 16px; cursor: pointer; transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); font-family: 'Quicksand', sans-serif; box-shadow: 0 5px 10px rgba(255,156,189,0.4);
         }
-        .btn:hover { background-color: #ff1493; }
-        .btn-cancel { background-color: #ccc; margin-left: 10px; display: none;}
-        .btn-cancel:hover { background-color: #999; }
+        .btn:hover { background-color: #ff7da5; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(255,156,189,0.6); }
+        .btn-cancel { background-color: #dcdcdc; color: #666; box-shadow: 0 5px 10px rgba(0,0,0,0.1); margin-left: 10px; display: none;}
+        .btn-cancel:hover { background-color: #c0c0c0; }
 
         /* --- DANH SÁCH SỰ KIỆN --- */
-        .event-list { display: flex; flex-direction: column; gap: 15px; }
+        .event-list { display: flex; flex-direction: column; gap: 20px; }
         
         .event-card {
-            background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-left: 6px solid #ffb6c1; transition: transform 0.2s;
+            background: #fff; padding: 25px; border-radius: 25px; box-shadow: 0 8px 15px rgba(255,182,193,0.15); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border: 3px solid #fff0f5; border-left: 8px solid var(--soft-pink); transition: all 0.3s;
         }
-        .event-card:hover { transform: translateX(5px); }
+        .event-card:hover { transform: translateX(5px) scale(1.01); border-color: var(--soft-pink); }
         
         .event-info { flex: 1; min-width: 250px; }
-        .event-title { font-size: 20px; font-weight: 700; color: #ff69b4; margin: 0 0 5px 0; }
-        .event-details { font-size: 14px; color: #777; margin: 5px 0; }
+        .event-title { font-size: 22px; font-weight: 900; color: #ff6b9e; margin: 0 0 10px 0; }
+        .event-details { font-size: 15px; color: #888; font-weight: 600; margin: 10px 0 0 0; }
         
-        /* Badges */
-        .badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: white; display: inline-block; margin-right: 5px;}
-        .cat-badge { background-color: #a0d8ef; color: #333; } /* Xanh biển nhẹ */
+        .badge { padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: 700; color: white; display: inline-block; margin-right: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+        .cat-badge { background-color: var(--blue-pastel); color: #444; } 
         
-        /* Status Colors */
-        .st-se-dien-ra { background-color: #b19cd9; } /* Tím */
-        .st-sap-dien-ra { background-color: #ffb347; } /* Cam */
-        .st-dang-dien-ra { background-color: #77dd77; animation: pulse 1.5s infinite; } /* Xanh lá */
-        .st-da-ket-thuc { background-color: #d3d3d3; color: #555; } /* Xám */
+        .st-se-dien-ra { background-color: var(--purple-pastel); } 
+        .st-sap-dien-ra { background-color: #ffb347; } 
+        .st-dang-dien-ra { background-color: #77dd77; animation: pulse 1.5s infinite; } 
+        .st-da-ket-thuc { background-color: #d3d3d3; color: #555; box-shadow: none; } 
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        .event-timer { font-size: 18px; font-weight: bold; color: #ff69b4; margin: 10px 0; min-width: 200px; text-align: right;}
+        .event-timer { font-size: 20px; font-weight: 900; color: var(--primary-pink); margin: 15px 0; min-width: 200px; text-align: right;}
         
+        .event-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;}
         .event-actions button {
-            border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-weight: bold; margin-left: 5px; font-family: 'Quicksand', sans-serif; transition: 0.2s;
+            border: none; padding: 10px 15px; border-radius: 15px; cursor: pointer; font-weight: 800; font-family: 'Quicksand', sans-serif; transition: 0.2s; font-size: 14px;
         }
-        .btn-edit { background-color: #ffe4e1; color: #ff69b4; }
-        .btn-edit:hover { background-color: #ffb6c1; color: white;}
-        .btn-delete { background-color: #ffcccb; color: red; }
-        .btn-delete:hover { background-color: red; color: white;}
+        
+        /* Nút riêng biệt */
+        .btn-edit { background-color: #ffe4e1; color: #ff6b9e; }
+        .btn-edit:hover { background-color: var(--soft-pink); color: white; transform: translateY(-2px);}
+        .btn-delete { background-color: #ffcccb; color: #d32f2f; }
+        .btn-delete:hover { background-color: #ff4c4c; color: white; transform: translateY(-2px);}
+        .btn-album { background-color: var(--blue-pastel); color: #fff; box-shadow: 0 4px 6px rgba(160,216,239,0.4); }
+        .btn-album:hover { background-color: #79c9ef; transform: translateY(-2px); }
 
-        footer { text-align: center; padding: 20px; background-color: #ffb6c1; color: white; font-weight: 600; margin-top: 40px; }
+        footer { text-align: center; padding: 25px; background-color: var(--primary-pink); color: var(--white); font-weight: 700; font-size: 16px; border-top: 4px solid #ff7da5; margin-top: 50px; }
 
         @media (max-width: 600px) {
-            .big-countdown { font-size: 32px; }
+            .big-countdown { font-size: 32px; padding: 10px 20px;}
             .event-timer { text-align: left; }
-            .event-actions { margin-top: 10px; width: 100%; display: flex; }
-            .event-actions button { flex: 1; }
+            .event-actions { margin-top: 15px; width: 100%; justify-content: space-between; }
+            .event-actions button { flex: 1; text-align: center; padding: 10px 5px;}
         }
+
+        /* --- POPUP TẠO ALBUM CUTE --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 182, 193, 0.4); backdrop-filter: blur(4px);
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-content {
+            background: #fff; padding: 30px; border-radius: 30px; width: 90%; max-width: 400px;
+            text-align: center; box-shadow: 0 15px 30px rgba(255,156,189,0.3); border: 4px solid #fff0f5;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .modal-content h3 { color: #ff6b9e; font-size: 24px; margin-bottom: 10px; font-weight: 900;}
+        .modal-content p { font-weight: 600; color: #666; margin-bottom: 20px; }
+        .modal-content input { margin-bottom: 20px; text-align: center; font-size: 18px;}
+        .modal-actions { display: flex; gap: 10px; justify-content: center; }
     </style>
 </head>
 <body>
 
+    <!-- PHẦN HEADER: LOGO VÀ THANH MENU -->
     <header>
         <a href="index.html" class="logo">🍀 F7 Team 🍀</a>
-        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
-        <nav id="nav-menu">
+        
+        <!-- Nút Hamburger cho Mobile -->
+        <div class="hamburger" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="navbar">
             <a href="index.html">Trang Chủ</a>
             <a href="goc-ky-niem.html">Góc Kỷ Niệm</a>
             <a href="su-kien-hang-nam.html" class="active">Sự Kiện Hằng Năm</a>
@@ -218,7 +278,7 @@
                 <div class="form-group">
                     <div>
                         <label>Tên sự kiện *</label>
-                        <input type="text" id="eventName" required placeholder="VD: Sinh nhật bé Chiikawa, Đi Đà Lạt...">
+                        <input type="text" id="eventName" required placeholder="VD: Sinh nhật Chiikawa, Đi biển...">
                     </div>
                     <div>
                         <label>Phân loại *</label>
@@ -252,73 +312,77 @@
         </div>
 
         <!-- DANH SÁCH SỰ KIỆN -->
-        <h3 style="color: #ff69b4;">📅 Danh sách sự kiện của nhóm</h3>
+        <h3 style="color: #ff6b9e; font-weight: 900; font-size: 24px;">📅 Danh sách sự kiện của nhóm</h3>
         <div class="event-list" id="eventList">
             <!-- Render từ JS -->
         </div>
     </main>
 
+    <!-- MODAL TẠO ALBUM -->
+    <div id="albumModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>📸 Tạo Album Mới</h3>
+            <p>Nhập tên album để lưu giữ kỷ niệm cho sự kiện này nhé!</p>
+            <input type="text" id="albumNameInput" placeholder="VD: Kỷ niệm Đà Lạt 2026">
+            <input type="hidden" id="albumEventId">
+            <input type="hidden" id="albumEventDate">
+            <div class="modal-actions">
+                <button class="btn" onclick="saveNewAlbum()">Tạo ngay!</button>
+                <button class="btn btn-cancel" onclick="closeAlbumModal()" style="display:inline-block;">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHẦN CHÂN TRANG -->
     <footer>
         <p>Made with ❤️ by F7 | Đồng hành từ 2025</p>
     </footer>
 
     <script>
-        // --- 1. XỬ LÝ NAVBAR MENU ---
-        function toggleMenu() {
-            document.getElementById("nav-menu").classList.toggle("show");
-        }
+        // --- 1. XỬ LÝ NAVBAR MENU MOBILE ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbar = document.getElementById('navbar');
+        mobileMenu.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+        });
 
         // --- 2. QUẢN LÝ SỰ KIỆN ---
         let events = JSON.parse(localStorage.getItem('f7_events')) || [];
-
         const eventForm = document.getElementById('eventForm');
         
-        // Sinh ID ngẫu nhiên
-        function generateId() {
-            return '_' + Math.random().toString(36).substr(2, 9);
-        }
+        function generateId() { return '_' + Math.random().toString(36).substr(2, 9); }
 
-        // Lấy thông tin ngày giờ thành đối tượng Date (chuẩn hóa giờ)
         function getEventDates(event) {
             let start = new Date(event.date + "T" + (event.startTime || "00:00") + ":00");
             let end = new Date(event.date + "T" + (event.endTime || "23:59") + ":00");
             return { start, end };
         }
 
-        // Đánh giá trạng thái
         function getEventStatus(event, now) {
             let { start, end } = getEventDates(event);
             if (now > end) return { text: "Đã kết thúc", class: "st-da-ket-thuc" };
             if (now >= start && now <= end) return { text: "Đang diễn ra", class: "st-dang-dien-ra" };
-            
-            // Nếu chưa diễn ra, kiểm tra xem có "Sắp diễn ra" (trong vòng 24h tới) không
             let diffHours = (start - now) / (1000 * 60 * 60);
             if (diffHours <= 24) return { text: "Sắp diễn ra", class: "st-sap-dien-ra" };
             return { text: "Sẽ diễn ra", class: "st-se-dien-ra" };
         }
 
-        // Render giao diện
         function renderEvents() {
             const list = document.getElementById('eventList');
             list.innerHTML = '';
             let now = new Date();
             let upcomingEvents = [];
 
-            // Sắp xếp sự kiện: Chưa/Đang diễn ra lên đầu, theo thời gian gần nhất
             events.sort((a, b) => getEventDates(a).start - getEventDates(b).start);
 
             events.forEach(ev => {
                 let status = getEventStatus(ev, now);
                 let { start, end } = getEventDates(ev);
                 
-                // Thu thập cho màn hình to (bỏ qua cái đã kết thúc)
                 if (status.text !== "Đã kết thúc") upcomingEvents.push({ ...ev, start });
 
-                // Chuỗi hiển thị giờ
                 let timeStr = ev.startTime ? `${ev.startTime} - ${ev.endTime || 'Hết ngày'}` : 'Cả ngày';
-                
-                // Format lại ngày theo dạng DD/MM/YYYY
-                let dateSplit = ev.date.split('-'); // input date trả về YYYY-MM-DD
+                let dateSplit = ev.date.split('-'); 
                 let dateFormatted = `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`;
 
                 list.innerHTML += `
@@ -327,12 +391,11 @@
                             <h4 class="event-title">${ev.name}</h4>
                             <span class="badge cat-badge">${ev.category}</span>
                             <span class="badge ${status.class}">${status.text}</span>
-                            <p class="event-details">📅 ${dateFormatted} | ⏰ ${timeStr}</p>
+                            <p class="event-details">📅 ${dateFormatted} &nbsp;|&nbsp; ⏰ ${timeStr}</p>
                         </div>
-                        <div class="event-timer" id="timer-${ev.id}">
-                            <!-- Update bởi setInterval -->
-                        </div>
+                        <div class="event-timer" id="timer-${ev.id}"></div>
                         <div class="event-actions">
+                            <button class="btn-album" onclick="openAlbumModal('${ev.id}')">📸 Tạo Album</button>
                             <button class="btn-edit" onclick="editEvent('${ev.id}')">✏️ Sửa</button>
                             <button class="btn-delete" onclick="deleteEvent('${ev.id}')">❌ Xóa</button>
                         </div>
@@ -340,7 +403,6 @@
                 `;
             });
 
-            // Cập nhật sự kiện gần nhất lên đầu
             if (upcomingEvents.length > 0) {
                 document.getElementById('closestTitle').innerText = upcomingEvents[0].name;
                 document.getElementById('closestTitle').dataset.targetId = upcomingEvents[0].id;
@@ -351,11 +413,9 @@
             }
         }
 
-        // Logic thêm/sửa sự kiện
         eventForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('eventId').value;
-            
             const newEvent = {
                 id: id ? id : generateId(),
                 name: document.getElementById('eventName').value,
@@ -371,13 +431,11 @@
             } else {
                 events.push(newEvent);
             }
-
             localStorage.setItem('f7_events', JSON.stringify(events));
             resetForm();
             renderEvents();
         });
 
-        // Xóa sự kiện
         window.deleteEvent = function(id) {
             if(confirm("Bạn có chắc chắn muốn xóa sự kiện này không?")) {
                 events = events.filter(ev => ev.id !== id);
@@ -386,7 +444,6 @@
             }
         }
 
-        // Sửa sự kiện
         window.editEvent = function(id) {
             let ev = events.find(e => e.id === id);
             document.getElementById('eventId').value = ev.id;
@@ -402,7 +459,6 @@
             window.scrollTo({ top: document.querySelector('.form-container').offsetTop - 100, behavior: 'smooth' });
         }
 
-        // Đặt lại form
         window.resetForm = function() {
             eventForm.reset();
             document.getElementById('eventId').value = "";
@@ -411,7 +467,7 @@
             document.getElementById('btnCancel').style.display = "none";
         }
 
-        // --- 3. ĐẾM NGƯỢC THỜI GIAN THEO GIÂY ---
+        // --- 3. ĐẾM NGƯỢC THỜI GIAN ---
         function updateTimers() {
             let now = new Date();
             let closestId = document.getElementById('closestTitle').dataset.targetId;
@@ -421,25 +477,18 @@
                 let timerEl = document.getElementById('timer-' + ev.id);
                 let text = "";
 
-                if (now > end) {
-                    text = "Đã xong ✔️";
-                } else if (now >= start && now <= end) {
-                    text = "Đang quẩy 🎉";
-                } else {
+                if (now > end) { text = "Đã xong ✔️"; }
+                else if (now >= start && now <= end) { text = "Đang quẩy 🎉"; }
+                else {
                     let diff = start - now;
                     let d = Math.floor(diff / (1000 * 60 * 60 * 24));
                     let h = Math.floor((diff / (1000 * 60 * 60)) % 24);
                     let m = Math.floor((diff / 1000 / 60) % 60);
                     let s = Math.floor((diff / 1000) % 60);
                     
-                    // Format có số 0 ở đầu
-                    h = h < 10 ? "0" + h : h;
-                    m = m < 10 ? "0" + m : m;
-                    s = s < 10 ? "0" + s : s;
-                    
+                    h = h < 10 ? "0" + h : h; m = m < 10 ? "0" + m : m; s = s < 10 ? "0" + s : s;
                     text = `${d} ngày ${h}:${m}:${s}`;
                     
-                    // Cập nhật Big Countdown nếu là sự kiện gần nhất
                     if (ev.id === closestId) {
                         document.getElementById('closestCountdown').innerText = text;
                     }
@@ -448,15 +497,62 @@
             });
         }
 
-        // Khởi tạo
         renderEvents();
         setInterval(() => {
             updateTimers();
-            // Cứ mỗi phút kiểm tra lại trạng thái để đổi màu nhãn (badge)
             if (new Date().getSeconds() === 0) renderEvents(); 
         }, 1000);
-        updateTimers(); // Chạy ngay lần đầu tiên
+        updateTimers(); 
 
+        // --- 4. TÍNH NĂNG TẠO ALBUM ẢNH CHUYỂN QUA GÓC KỶ NIỆM ---
+        const modal = document.getElementById('albumModal');
+        const albumNameInput = document.getElementById('albumNameInput');
+        const albumEventId = document.getElementById('albumEventId');
+        const albumEventDate = document.getElementById('albumEventDate');
+
+        window.openAlbumModal = function(id) {
+            let ev = events.find(e => e.id === id);
+            if(ev) {
+                albumNameInput.value = "Album " + ev.name;
+                albumEventId.value = ev.id;
+                albumEventDate.value = ev.date;
+                modal.style.display = 'flex';
+                albumNameInput.focus();
+            }
+        }
+
+        window.closeAlbumModal = function() {
+            modal.style.display = 'none';
+        }
+
+        window.saveNewAlbum = function() {
+            let name = albumNameInput.value.trim();
+            if(name === "") {
+                alert("Vui lòng nhập tên album!");
+                return;
+            }
+
+            // Lấy danh sách album đã có (hoặc tạo mảng mới) từ localStorage
+            let albums = JSON.parse(localStorage.getItem('f7_albums')) || [];
+            
+            // Tạo Cấu trúc album chuẩn để trang Góc Kỷ Niệm có thể đọc được
+            let newAlbum = {
+                id: 'album_' + Math.random().toString(36).substr(2, 9),
+                eventId: albumEventId.value,
+                name: name,
+                date: albumEventDate.value,
+                // Không có ảnh cover => Để trang Góc Kỷ Niệm tự hiện khung trống
+                cover: 'https://via.placeholder.com/300x200.png?text=Album+Ch%C6%B0a+C%C3%B3+%E1%BA%A2nh', 
+                images: [] // Mảng trống chờ thêm ảnh
+            };
+
+            // Lưu vào localStorage
+            albums.push(newAlbum);
+            localStorage.setItem('f7_albums', JSON.stringify(albums));
+            
+            // Chuyển hướng lập tức
+            window.location.href = "goc-ky-niem.html";
+        }
     </script>
 </body>
 </html>
